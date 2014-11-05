@@ -16,21 +16,27 @@ public class GameScreen implements Screen {
 	OrthographicCamera camera;
 
 	
-	private static final int    FRAME_COLS =3;     // #1
+	private static final int    FRAME_COLS = 4;     // #1
     private static final int    FRAME_ROWS = 1;     // #2
 	
 	Animation           walkAnimationLeft;
 	Animation           walkAnimationRight;
+	Animation           walkAnimationUp;
+	Animation           walkAnimationDown;
+	
 	Texture             walkSheetLeft;
-	Texture             walkSheetRight;// #4
-    TextureRegion[]         walkFrames;     // #5
-    SpriteBatch         spriteBatch;        // #6
-    TextureRegion           currentFrame;  
+	Texture             walkSheetRight;
+	Texture             walkSheetUp;
+	Texture             walkSheetDown;
+	
+    SpriteBatch         spriteBatch;
+    TextureRegion       currentFrame;  
     int direction;
     
     float stateTime; 
     
-    int position = 0;
+    int positionX = 50;
+    int positionY = 50;
     
 	public GameScreen(GDXGame game) {
         this.game = game;
@@ -38,82 +44,92 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
+        // Os arquivos estão invertidos para permitirem o efeito de moonwalk
+        // Because the zoeira never ends
         
-        walkSheetLeft = new Texture(Gdx.files.internal("right.jpg")); // #9
-        walkSheetRight = new Texture(Gdx.files.internal("left.jpg"));
-        TextureRegion[][] tmp = TextureRegion.split(walkSheetLeft, walkSheetLeft.getWidth()/FRAME_COLS, walkSheetLeft.getHeight()/FRAME_ROWS);              // #10
-        walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                walkFrames[index++] = tmp[i][j];
-            }
-        }
-        walkAnimationLeft = new Animation(0.25f, walkFrames);      // #11
-        tmp = TextureRegion.split(walkSheetRight, walkSheetRight.getWidth()/FRAME_COLS, walkSheetRight.getHeight()/FRAME_ROWS);              // #10
+        walkSheetLeft = new Texture(Gdx.files.internal("right.png"));
+        walkAnimationLeft = createWalkingFrame( walkSheetLeft);
+
+        walkSheetRight = new Texture(Gdx.files.internal("left.png"));
+        walkAnimationRight = createWalkingFrame( walkSheetRight);
         
-        walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                walkFrames[index++] = tmp[i][j];
-            }
-        }
-        walkAnimationRight = new Animation(0.25f, walkFrames);
+        walkSheetUp = new Texture(Gdx.files.internal("front.png"));
+        walkAnimationUp = createWalkingFrame( walkSheetUp);
+        
+        walkSheetDown = new Texture(Gdx.files.internal("behind.png"));
+        walkAnimationDown = createWalkingFrame( walkSheetDown);
+        
         spriteBatch = new SpriteBatch();                // #12
         stateTime = 0f;
         
         direction = Keys.A;
 	}
+	
+	private Animation createWalkingFrame( Texture walkSheet){
+		
+		TextureRegion[][] aux = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);
+		TextureRegion[]   walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        
+        int index = 0;
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
+                walkFrames[index++] = aux[i][j];
+            }
+        }
+		return new Animation(0.25f, walkFrames);
+	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(1f, 1f, 1f, 0);
+		Gdx.gl.glClearColor(1f, 1f, 1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
 
 		stateTime += Gdx.graphics.getDeltaTime();           // #15
-		if (Gdx.input.isKeyPressed(Keys.A)) {
+		if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
 			direction = Keys.A;
 		}
-		if (Gdx.input.isKeyPressed(Keys.D)) {
+		if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			direction = Keys.D;
 		}
-		if (Gdx.input.isKeyPressed(Keys.W)) {
+		if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) {
 			direction = Keys.W;
 		}
-		if (Gdx.input.isKeyPressed(Keys.S)) {
+		if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
 			direction = Keys.S;
 		}
-//		if (direction == Keys.A) {
-//			currentFrame = walkAnimationLeft.getKeyFrame(stateTime, true);
-//			positionX--;
-//		}
-//		else if (direction == Keys.D) {
-//			currentFrame = walkAnimationRight.getKeyFrame(stateTime, true);
-//			positionX++;
-//		}else if (direction == Keys.W) {
-//			currentFrame = walkAnimationLeft.getKeyFrame(stateTime, true);
-//			positionY--;
-//		}
-//		else if (direction == Keys.S) {
-//			currentFrame = walkAnimationRight.getKeyFrame(stateTime, true);
-//			positionY++;
-//		}
-//		
-//        
-//        if(positionX >=800){
-//        	positionX = 0;
-//        }else if(positionX <=0){
-//        	positionX = 800;
-//        }
+		if (direction == Keys.A) {
+			currentFrame = walkAnimationLeft.getKeyFrame(stateTime, true);
+			positionX--;
+		}
+		else if (direction == Keys.D) {
+			currentFrame = walkAnimationRight.getKeyFrame(stateTime, true);
+			positionX++;
+		}else if (direction == Keys.W) {
+			currentFrame = walkAnimationUp.getKeyFrame(stateTime, true);
+			positionY++;
+		}
+		else if (direction == Keys.S) {
+			currentFrame = walkAnimationDown.getKeyFrame(stateTime, true);
+			positionY--;
+		}
+		
+        
+        if(positionX >= 800){
+        	positionX = -126;
+        }else if(positionX <= -126){
+        	positionX = 800;
+        }else if(positionY >= 480){
+        	positionY = -154;
+        }else if(positionY <= -154){
+        	positionY = 480;
+        }
         
 		game.batch.begin();
 
-		
-		game.batch.draw(currentFrame, position, 50, 256, 128);  
+		game.batch.draw(currentFrame, positionX, positionY, 154, 126);  
 		
 		game.batch.end();
 	}
