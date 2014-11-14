@@ -62,7 +62,7 @@ public class MoonWalkTour implements Screen {
         spriteBatch = new SpriteBatch();                // #12
         stateTime = 0f;
         
-        direction = Keys.A;
+        direction = Keys.RIGHT;
 	}
 	
 	private Animation createWalkingFrame( Texture walkSheet){
@@ -81,7 +81,7 @@ public class MoonWalkTour implements Screen {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(1f, 1f, 1f, 1);
+		Gdx.gl.glClearColor(0.3f, 0.3f, 1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camera.update();
@@ -89,31 +89,31 @@ public class MoonWalkTour implements Screen {
 
 		stateTime += Gdx.graphics.getDeltaTime();           // #15
 		if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
-			direction = Keys.A;
+			direction = Keys.LEFT;
 		}
 		if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			direction = Keys.D;
+			direction = Keys.RIGHT;
 		}
 		if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) {
-			direction = Keys.W;
+			direction = Keys.UP;
 		}
 		if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
-			direction = Keys.S;
+			direction = Keys.DOWN;
 		}
-		if (direction == Keys.A) {
+		if (direction == Keys.LEFT) {
 			currentFrame = walkAnimationLeft.getKeyFrame(stateTime, true);
-			positionX--;
+			positionX -= 2;
 		}
-		else if (direction == Keys.D) {
+		else if (direction == Keys.RIGHT) {
 			currentFrame = walkAnimationRight.getKeyFrame(stateTime, true);
-			positionX++;
-		}else if (direction == Keys.W) {
+			positionX += 2;
+		}else if (direction == Keys.UP) {
 			currentFrame = walkAnimationUp.getKeyFrame(stateTime, true);
-			positionY++;
+			positionY += 2;
 		}
-		else if (direction == Keys.S) {
+		else if (direction == Keys.DOWN) {
 			currentFrame = walkAnimationDown.getKeyFrame(stateTime, true);
-			positionY--;
+			positionY -= 2;
 		}
 		
         
