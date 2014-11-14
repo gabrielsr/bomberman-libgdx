@@ -1,7 +1,5 @@
 package br.unb.bomberman.ui.screens;
 
-import br.unb.bomberman.ui.audio.BombermanSound;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,8 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 public class MainMenuScreen implements Screen {
 
     final GDXGame game;
-
-    final BombermanSound bombermanSound;
     
     OrthographicCamera camera;
 
@@ -21,12 +17,6 @@ public class MainMenuScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-        
-        bombermanSound = new BombermanSound();
-        bombermanSound.load();
-        
-        bombermanSound.openTheme.play();
-
     }
 
     @Override
@@ -37,7 +27,7 @@ public class MainMenuScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         
-        Texture texture = new Texture(Gdx.files.internal("Brick.png"));
+        Texture texture = new Texture(Gdx.files.internal("walking.png"));
 
         game.batch.begin();
         
@@ -54,7 +44,7 @@ public class MainMenuScreen implements Screen {
         
         
         if (Gdx.input.isTouched()) {
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new MoonWalkTour(game));
             dispose();
         }
     }
