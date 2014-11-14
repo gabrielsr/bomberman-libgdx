@@ -1,0 +1,33 @@
+bomberman-ligdx
+===============
+
+Interface LigGDX for bomberman game
+
+Projeto em Desenvolvimento de um Bomberman clone utilizando programação modular, 
+desenvolvido como projeto da disciplina:
+
+Programação Sistemática
+
+Universidade de Brasília - UnB
+
+2/2014
+
+
+= Inclua o Projeto Bomberman
+
+Primeiro siga o passo a passo em:
+https://github.com/gabrielsr/bomberman
+
+
+== Importanto o projeto no Eclipse
+
+Go to File -> Import -> Gradle -> Gradle Project, navega até a pasta root deste projeto. Selecione [Build Model]
+
+OBS: a importação pode demorar vários minutos na primeira vez que for realiza pois será realizado download 
+das dependências do Gradle.
+
+== Incluindo projeto bomberman no Build Path do bomerman-libgdx-core
+
+Para ter acesso as classes do projeto bomberman, no bomberman-libgdx-core:
+
+Clique com o botão direito no projeto libgdx-core > properties > Java Build Path>  Aba "Projects"  e inclua o projeto bomberman. 
