@@ -1,5 +1,7 @@
 package br.unb.bomberman.ui.screens;
 
+import br.unb.unbomber.GDXGame;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;

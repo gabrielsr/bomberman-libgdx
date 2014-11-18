@@ -48,7 +48,7 @@ public class PlayerControlSystem extends BaseSystem {
 			action = ActionType.EXPLODE_REMOTE_BOMB;
 		}
 		
-		if(direction!=null){
+		if(action!=null){
 			getEntityManager().addEvent(
 				(new ActionCommandEvent(action,1)));
 		}
