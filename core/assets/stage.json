@@ -1,0 +1,15 @@
+{
+entities: [
+	{
+		components: [
+			{
+				class: br.unb.unbomber.component.CellPlacement,
+				cellX: 4,
+				cellY: 3
+			}
+		]
+	}
+],
+name: "Stage Teste",
+mapRepresentation: "############@@    ##"
+}

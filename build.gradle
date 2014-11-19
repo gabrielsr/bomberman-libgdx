@@ -24,6 +24,7 @@ allprojects {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "http://dl.bintray.com/gabrielsr/bomberman" }
     }
 }
 
@@ -43,6 +44,7 @@ project(":core") {
 
 
     dependencies {
+        compile "br.unb.cic:bomberman:0.02"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
     }
 }

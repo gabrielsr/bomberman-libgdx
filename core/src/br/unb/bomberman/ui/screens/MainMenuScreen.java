@@ -1,18 +1,15 @@
 package br.unb.bomberman.ui.screens;
 
-import br.unb.bomberman.ui.audio.BombermanSound;
+import br.unb.unbomber.GDXGame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 
 public class MainMenuScreen implements Screen {
 
     final GDXGame game;
-
-    final BombermanSound bombermanSound;
     
     OrthographicCamera camera;
 
@@ -21,12 +18,6 @@ public class MainMenuScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-        
-        bombermanSound = new BombermanSound();
-        bombermanSound.load();
-        
-        bombermanSound.openTheme.play();
-
     }
 
     @Override
@@ -37,24 +28,15 @@ public class MainMenuScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         
-        Texture texture = new Texture(Gdx.files.internal("Brick.png"));
-
         game.batch.begin();
         
-        game.font.draw(game.batch, "Welcome to Drop!!! ", 100, 150);
-        game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
-        
-        
-        game.batch.draw(texture, 800/2 - 64/2, 10);
-        
+        Assets.font.draw(game.batch, "Welcome to Bomberman!!! ", 100, 150);
+        Assets.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
         
         game.batch.end();
 
-
-        
-        
         if (Gdx.input.isTouched()) {
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new GameScreen(game, game.FIRST_STAGE_LEVEL_ID));
             dispose();
         }
     }

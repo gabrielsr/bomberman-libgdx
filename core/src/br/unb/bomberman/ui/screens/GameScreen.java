@@ -1,157 +1,249 @@
+/*******************************************************************************
+ * Copyright 2011 See AUTHORS file.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
 package br.unb.bomberman.ui.screens;
 
+
+import br.unb.unbomber.BomberMatchWithUi;
+import br.unb.unbomber.BomberMatchWithUi.State;
+import br.unb.unbomber.GDXGame;
+import br.unb.unbomber.Settings;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 
-public class GameScreen implements Screen {
-		final GDXGame game;
-
-	OrthographicCamera camera;
-
+public class GameScreen extends ScreenAdapter {
+	static final int GAME_READY = 0;
+	static final int GAME_RUNNING = 1;
+	static final int GAME_PAUSED = 2;
+	static final int GAME_LEVEL_END = 3;
+	static final int GAME_OVER = 4;
 	
-	private static final int    FRAME_COLS =3;     // #1
-    private static final int    FRAME_ROWS = 1;     // #2
-	
-	Animation           walkAnimationLeft;
-	Animation           walkAnimationRight;
-	Texture             walkSheetLeft;
-	Texture             walkSheetRight;// #4
-    TextureRegion[]         walkFrames;     // #5
-    SpriteBatch         spriteBatch;        // #6
-    TextureRegion           currentFrame;  
-    int direction;
-    
-    float stateTime; 
-    
-    int position = 0;
-    
-	public GameScreen(GDXGame game) {
-        this.game = game;
-        
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+	GDXGame game;
 
-        
-        walkSheetLeft = new Texture(Gdx.files.internal("right.jpg")); // #9
-        walkSheetRight = new Texture(Gdx.files.internal("left.jpg"));
-        TextureRegion[][] tmp = TextureRegion.split(walkSheetLeft, walkSheetLeft.getWidth()/FRAME_COLS, walkSheetLeft.getHeight()/FRAME_ROWS);              // #10
-        walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                walkFrames[index++] = tmp[i][j];
-            }
-        }
-        walkAnimationLeft = new Animation(0.25f, walkFrames);      // #11
-        tmp = TextureRegion.split(walkSheetRight, walkSheetRight.getWidth()/FRAME_COLS, walkSheetRight.getHeight()/FRAME_ROWS);              // #10
-        
-        walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                walkFrames[index++] = tmp[i][j];
-            }
-        }
-        walkAnimationRight = new Animation(0.25f, walkFrames);
-        spriteBatch = new SpriteBatch();                // #12
-        stateTime = 0f;
-        
-        direction = Keys.A;
+	OrthographicCamera guiCam;
+	Vector3 touchPoint;
+
+	Rectangle pauseBounds;
+	Rectangle resumeBounds;
+	Rectangle quitBounds;
+	
+	int lastScore;
+	String scoreString;
+	
+	BomberMatchWithUi match;
+	
+	private int state;
+
+	public GameScreen (GDXGame game, String stageId) {
+		this.game = game;
+
+		state = GAME_READY;
+		guiCam = new OrthographicCamera(320, 480);
+		guiCam.position.set(320 / 2, 480 / 2, 0);
+		touchPoint = new Vector3();
+		
+		match = new BomberMatchWithUi(game.batch, stageId);
+
+		pauseBounds = new Rectangle(320 - 64, 480 - 64, 64, 64);
+		resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
+		quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
+
+		lastScore = 0;
+		scoreString = "SCORE: 0";
+		
+		pauseSystems();
 	}
 
-	@Override
-	public void render(float delta) {
-		Gdx.gl.glClearColor(1f, 1f, 1f, 0);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	public void update (float deltaTime) {
+		if (deltaTime > 0.1f) deltaTime = 0.1f;
 
-		camera.update();
-		game.batch.setProjectionMatrix(camera.combined);
+		match.update();
+		
+		switch (state) {
+		case GAME_READY:
+			updateReady();
+			break;
+		case GAME_RUNNING:
+			updateRunning(deltaTime);
+			break;
+		case GAME_PAUSED:
+			updatePaused();
+			break;
+		case GAME_LEVEL_END:
+			updateLevelEnd();
+			break;
+		case GAME_OVER:
+			updateGameOver();
+			break;
+		}
+	}
 
-		stateTime += Gdx.graphics.getDeltaTime();           // #15
-		if (Gdx.input.isKeyPressed(Keys.A)) {
-			direction = Keys.A;
+	private void updateReady () {
+		if (Gdx.input.justTouched()) {
+			state = GAME_RUNNING;
+			resumeSystems();
 		}
-		if (Gdx.input.isKeyPressed(Keys.D)) {
-			direction = Keys.D;
+	}
+
+	private void updateRunning (float deltaTime) {
+		if (Gdx.input.justTouched()) {
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+			if (pauseBounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				state = GAME_PAUSED;
+				pauseSystems();
+				return;
+			}
 		}
-		if (Gdx.input.isKeyPressed(Keys.W)) {
-			direction = Keys.W;
+		
+		
+		if (match.score != lastScore) {
+			lastScore = match.score;
+			scoreString = "SCORE: " + lastScore;
 		}
-		if (Gdx.input.isKeyPressed(Keys.S)) {
-			direction = Keys.S;
+		if (match.state == State.WORLD_STATE_NEXT_LEVEL) {
+			game.setScreen(new WinScreen(game));
 		}
-//		if (direction == Keys.A) {
-//			currentFrame = walkAnimationLeft.getKeyFrame(stateTime, true);
-//			positionX--;
-//		}
-//		else if (direction == Keys.D) {
-//			currentFrame = walkAnimationRight.getKeyFrame(stateTime, true);
-//			positionX++;
-//		}else if (direction == Keys.W) {
-//			currentFrame = walkAnimationLeft.getKeyFrame(stateTime, true);
-//			positionY--;
-//		}
-//		else if (direction == Keys.S) {
-//			currentFrame = walkAnimationRight.getKeyFrame(stateTime, true);
-//			positionY++;
-//		}
-//		
-//        
-//        if(positionX >=800){
-//        	positionX = 0;
-//        }else if(positionX <=0){
-//        	positionX = 800;
-//        }
-        
+		if (match.state == State.WORLD_STATE_GAME_OVER) {
+			state = GAME_OVER;
+			if (lastScore >= Settings.highscores[4])
+				scoreString = "NEW HIGHSCORE: " + lastScore;
+			else
+				scoreString = "SCORE: " + lastScore;
+			pauseSystems();
+			Settings.addScore(lastScore);
+			Settings.save();
+		}
+	}
+
+	private void updatePaused () {
+		if (Gdx.input.justTouched()) {
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+			if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				state = GAME_RUNNING;
+				resumeSystems();
+				return;
+			}
+
+			if (quitBounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				game.setScreen(new MainMenuScreen(game));
+				return;
+			}
+		}
+	}
+
+	private void updateLevelEnd () {
+		if (Gdx.input.justTouched()) {
+			match.removeAllEntities();
+			
+			//TODO get the next level
+			String nextLevelStageId = "stage";
+			
+			match = new BomberMatchWithUi(game.batch, nextLevelStageId);
+			match.score = lastScore;
+			state = GAME_READY;
+		}
+	}
+
+	private void updateGameOver () {
+		if (Gdx.input.justTouched()) {
+			game.setScreen(new MainMenuScreen(game));
+		}
+	}
+
+	public void drawUI () {
+		guiCam.update();
+		game.batch.setProjectionMatrix(guiCam.combined);
 		game.batch.begin();
-
-		
-		game.batch.draw(currentFrame, position, 50, 256, 128);  
-		
+		switch (state) {
+		case GAME_READY:
+			presentReady();
+			break;
+		case GAME_RUNNING:
+			presentRunning();
+			break;
+		case GAME_PAUSED:
+			presentPaused();
+			break;
+		case GAME_LEVEL_END:
+			presentLevelEnd();
+			break;
+		case GAME_OVER:
+			presentGameOver();
+			break;
+		}
 		game.batch.end();
 	}
 
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+	private void presentReady () {
+		game.batch.draw(Assets.ready, 160 - 192 / 2, 240 - 32 / 2, 192, 32);
+	}
 
+	private void presentRunning () {
+		game.batch.draw(Assets.pause, 320 - 64, 480 - 64, 64, 64);
+		Assets.font.draw(game.batch, scoreString, 16, 480 - 20);
+	}
+
+	private void presentPaused () {
+		game.batch.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
+		Assets.font.draw(game.batch, scoreString, 16, 480 - 20);
+	}
+
+	private void presentLevelEnd () {
+		String topText = "the princess is ...";
+		String bottomText = "in another castle!";
+		float topWidth = Assets.font.getBounds(topText).width;
+		float bottomWidth = Assets.font.getBounds(bottomText).width;
+		Assets.font.draw(game.batch, topText, 160 - topWidth / 2, 480 - 40);
+		Assets.font.draw(game.batch, bottomText, 160 - bottomWidth / 2, 40);
+	}
+
+	private void presentGameOver () {
+		game.batch.draw(Assets.gameOver, 160 - 160 / 2, 240 - 96 / 2, 160, 96);
+		float scoreWidth = Assets.font.getBounds(scoreString).width;
+		Assets.font.draw(game.batch, scoreString, 160 - scoreWidth / 2, 480 - 20);
+	}
+	
+	private void pauseSystems() {
+		//TODO
+	}
+	
+	private void resumeSystems() {
+		//TODO
 	}
 
 	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-
+	public void render (float delta) {
+		update(delta);
+		drawUI();
 	}
 
 	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-
+	public void pause () {
+		if (state == GAME_RUNNING) {
+			state = GAME_PAUSED;
+			pauseSystems();
+		}
 	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-
-	}
-
 }
