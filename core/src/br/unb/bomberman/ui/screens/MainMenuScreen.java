@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.sun.org.apache.xml.internal.security.Init;
 
 public class MainMenuScreen implements Screen {
 
@@ -71,7 +70,7 @@ public class MainMenuScreen implements Screen {
 
         walkSheetLeftZombie = new Texture(Gdx.files.internal("data/character2/walking-left.png"));
         walkAnimationLeftZombie = createWalkingFrame( walkSheetLeftZombie);
-
+        
     }
     
     private Animation createWalkingFrame( Texture walkSheet){
@@ -132,7 +131,7 @@ public class MainMenuScreen implements Screen {
         
         game.batch.begin();
         
-        game.batch.draw(background, -28, -126, 864, 720);
+        game.batch.draw(background, -28, -122, 864, 720);
         
         if(isMoonWalkerWalkingRight){
         	game.batch.draw(currentFrameMoonWalker, initialPositionMoonWalker_X + steps, initialPositionMoonWalker_Y, 154, 126); 
@@ -143,9 +142,11 @@ public class MainMenuScreen implements Screen {
         }
         
         
-        Assets.font.draw(game.batch, "Welcome to Bomberman!!! ", 100, 150);
-        Assets.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
-        Assets.font.draw(game.batch, "Teste!", 100, 50);
+        
+        // Menu... TODO: Criar botões reais.
+        Assets.font.draw(game.batch, "New Game!", 50, 300);
+        Assets.font.draw(game.batch, "High Scores", 50, 250);
+        Assets.font.draw(game.batch, "How to Play", 50, 200);
         
         game.batch.end();
 
