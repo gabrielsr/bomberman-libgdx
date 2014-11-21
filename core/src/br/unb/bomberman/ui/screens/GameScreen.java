@@ -153,6 +153,8 @@ public class GameScreen extends ScreenAdapter {
 				Assets.playSound(Assets.clickSound);
 				Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
 				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+				Assets.music.setVolume(Settings.soundVolume);
+				state = GAME_READY;
 				game.getScreen().dispose();
 				game.setScreen(new MainMenuScreen(game));
 				return;
