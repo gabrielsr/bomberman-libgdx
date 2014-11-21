@@ -21,6 +21,7 @@ import com.badlogic.gdx.files.FileHandle;
 
 public class Settings {
 	public static boolean soundEnabled = true;
+	public static float soundVolume = 0.5f;
 	public final static int[] highscores = new int[] {100, 80, 50, 30, 10};
 	public final static String file = ".superjumper";
 
