@@ -4,21 +4,12 @@ import br.unb.unbomber.GDXGame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class MainMenuScreen implements Screen {
 
@@ -56,17 +47,7 @@ public class MainMenuScreen implements Screen {
 	int steps = 0;
 	float stateTime = 0f;
 	
-	// Main Menu Components
-	final int INIT_POS_X_MENU = 160;
-	final int INIT_POS_Y_MENU = 290;
-	final int MENU_ITEN_HEIGHT = 50;
-	final int MENU_ITEN_WIDTH = 350;
 	private Stage stage;
-	private Skin skin;
-	private Pixmap pixmap;
-	private TextButton button;
-	private TextButtonStyle textButtonStyle;
-	
 
     public MainMenuScreen(final GDXGame game) {
         this.game = game;
@@ -87,74 +68,15 @@ public class MainMenuScreen implements Screen {
         walkSheetLeftZombie = new Texture(Gdx.files.internal("data/character2/walking-left.png"));
         walkAnimationLeftZombie = createWalkingFrame( walkSheetLeftZombie);
         
-        // Game Main Menu
-        //TODO: refactoring 
+        // Game Main Menu Building
         stage = new Stage();
         stage.clear();
         Gdx.input.setInputProcessor(stage);
-        pixmap = new Pixmap(100, 100, Format.RGBA8888);
-		pixmap.setColor(Color.WHITE);
-		pixmap.fill();
-		skin = new Skin();
-		skin.add("white", new Texture(pixmap));
-        textButtonStyle = new TextButtonStyle();
-        textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-		textButtonStyle.checked = skin.newDrawable("white", Color.BLACK);
-		textButtonStyle.font = new BitmapFont(Gdx.files.internal("data/font.fnt"), Gdx.files.internal("data/font.png"), false);
-		textButtonStyle.font.setScale(1.6f);
-        button = new TextButton("New Game", textButtonStyle);
-        button.setPosition(INIT_POS_X_MENU, INIT_POS_Y_MENU-MENU_ITEN_HEIGHT*0);
-        button.setHeight(MENU_ITEN_HEIGHT);
-        button.setWidth(MENU_ITEN_WIDTH);
-        button.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				Assets.playSound(Assets.clickSound);
-				Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
-				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-				game.getScreen().dispose();
-				game.setScreen(new GameScreen(game, game.FIRST_STAGE_LEVEL_ID));
-			}
-		});
-        stage.addActor(button);
-        button = new TextButton("High Scores", textButtonStyle);
-        button.setPosition(INIT_POS_X_MENU, INIT_POS_Y_MENU-MENU_ITEN_HEIGHT*1);
-        button.setHeight(MENU_ITEN_HEIGHT);
-        button.setWidth(MENU_ITEN_WIDTH);
-        button.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				Assets.playSound(Assets.clickSound);
-				game.getScreen().dispose();
-			}
-		});
-        stage.addActor(button);
-        button = new TextButton("Settings", textButtonStyle);
-        button.setPosition(INIT_POS_X_MENU, INIT_POS_Y_MENU-MENU_ITEN_HEIGHT*2);
-        button.setHeight(MENU_ITEN_HEIGHT);
-        button.setWidth(MENU_ITEN_WIDTH);
-        button.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				Assets.playSound(Assets.clickSound);
-				game.getScreen().dispose();
-			}
-		});
-        stage.addActor(button);
-        button = new TextButton("How to Play", textButtonStyle);
-        button.setPosition(INIT_POS_X_MENU, INIT_POS_Y_MENU-MENU_ITEN_HEIGHT*3);
-        button.setHeight(MENU_ITEN_HEIGHT);
-        button.setWidth(MENU_ITEN_WIDTH);
-        button.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				Assets.playSound(Assets.clickSound);
-				game.getScreen().dispose();
-			}
-		});
-        stage.addActor(button);
+        MenuButtonFactory factory = new MenuButtonFactory();
+        stage.addActor(factory.makeMenuButton(game, "New Game", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
+        stage.addActor(factory.makeMenuButton(game, "High Scores", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
+        stage.addActor(factory.makeMenuButton(game, "Settings", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
+        stage.addActor(factory.makeMenuButton(game, "How to Play", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
     }
     
     private Animation createWalkingFrame( Texture walkSheet){
