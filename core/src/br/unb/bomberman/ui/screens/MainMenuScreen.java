@@ -137,7 +137,10 @@ public class MainMenuScreen implements Screen {
         	game.batch.draw(currentFrameMoonWalker, initialPositionMoonWalker_X - steps, initialPositionMoonWalker_Y, 154, 126); 
         	game.batch.draw(currentFrameZombie, initialPositionZombie_X + steps, initialPositionZombie_Y, 154, 126);
         }
-        Assets.font.draw(game.batch, "NEED FIX: Why the zombie disapear if we delete/comment this line?", 0, 0);
+        
+        // Forces the render
+        game.batch.flush();
+        
         stage.act();
         stage.draw();
         game.batch.end();
