@@ -31,7 +31,8 @@ public class GDXGame extends Game {
 	 * 
 	 */
 	public void play(){
-		this.setScreen(new GameScreen(this, FIRST_STAGE_LEVEL_ID));
+		//line bellow commentted because it results in bug on screen update  
+		//this.setScreen(new GameScreen(this, FIRST_STAGE_LEVEL_ID));
 	}
 
     public void render() {
