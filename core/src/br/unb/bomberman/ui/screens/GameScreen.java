@@ -16,7 +16,6 @@
 
 package br.unb.bomberman.ui.screens;
 
-
 import br.unb.unbomber.BomberMatchWithUi;
 import br.unb.unbomber.BomberMatchWithUi.State;
 import br.unb.unbomber.GDXGame;
@@ -24,6 +23,7 @@ import br.unb.unbomber.Settings;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -108,6 +108,7 @@ public class GameScreen extends ScreenAdapter {
 
 			if (pauseBounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
+				Assets.music.setVolume(0f);
 				state = GAME_PAUSED;
 				pauseSystems();
 				return;
@@ -140,6 +141,9 @@ public class GameScreen extends ScreenAdapter {
 
 			if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
+				Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+				Assets.music.setVolume(Settings.soundVolume);
 				state = GAME_RUNNING;
 				resumeSystems();
 				return;
@@ -147,6 +151,11 @@ public class GameScreen extends ScreenAdapter {
 
 			if (quitBounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
+				Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+				Assets.music.setVolume(Settings.soundVolume);
+				state = GAME_READY;
+				game.getScreen().dispose();
 				game.setScreen(new MainMenuScreen(game));
 				return;
 			}
@@ -201,11 +210,15 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	private void presentRunning () {
+		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.draw(Assets.pause, 320 - 64, 480 - 64, 64, 64);
 		Assets.font.draw(game.batch, scoreString, 16, 480 - 20);
 	}
 
 	private void presentPaused () {
+		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
 		Assets.font.draw(game.batch, scoreString, 16, 480 - 20);
 	}
