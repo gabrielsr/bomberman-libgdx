@@ -41,8 +41,9 @@ project(":desktop") {
 
 project(":core") {
     apply plugin: "java"
+
+
     dependencies {
- 
         compile "br.unb.cic:bomberman:0.03"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
     }
