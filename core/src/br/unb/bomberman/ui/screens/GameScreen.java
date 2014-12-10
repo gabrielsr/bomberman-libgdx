@@ -70,6 +70,11 @@ public class GameScreen extends ScreenAdapter {
 		
 		pauseSystems();
 	}
+	
+	@Override
+	public void show(){
+		match.start();
+	}
 
 	public void update (float deltaTime) {
 		if (deltaTime > 0.1f) deltaTime = 0.1f;

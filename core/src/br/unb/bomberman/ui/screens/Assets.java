@@ -38,7 +38,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class Assets {
 	public static Texture background;
-	public static TextureRegion backgroundRegion;
+	public static TextureRegion backgroundGround;
+	public static TextureRegion backgroundSBlock;
+	public static TextureRegion backgroundHBlock;
 
 	public static Texture items;
 	public static TextureRegion mainMenu;
@@ -74,8 +76,10 @@ public class Assets {
 	}
 
 	public static void load () {
-		background = loadTexture("data/background.png");
-		backgroundRegion = new TextureRegion(background, 0, 0, 320, 480);
+		background = loadTexture("map_tiles.png");
+		backgroundGround = new TextureRegion(background, 0, 0, 32, 32);
+		backgroundSBlock = new TextureRegion(background, 64, 0, 32, 32);
+		backgroundHBlock = new TextureRegion(background, 96, 0, 32, 32);
 
 		items = loadTexture("data/items.png");
 		mainMenu = new TextureRegion(items, 0, 224, 300, 110);
@@ -119,6 +123,8 @@ public class Assets {
 		bobHit.setPlayMode(PlayMode.LOOP);
 		squirrelFly.setPlayMode(PlayMode.LOOP);
 		platform.setPlayMode(PlayMode.LOOP);
+		
+		
 	}
 
 	public static void playSound (Sound sound) {

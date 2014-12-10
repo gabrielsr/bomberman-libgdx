@@ -25,18 +25,28 @@ public class BomberMatchWithUi extends TargetFrameRateMatch{
 	
 	public int score;
 
-	public State state; 
+	public State state;
+	
+	final private String stageId;
+	
+	final private SpriteBatch batch;
 	
 	public BomberMatchWithUi( SpriteBatch batch, String stageId) {
 		super(DEFAUT_FRAME_RATE);
+		this.stageId = stageId;
+		this.batch = batch;
+	}
+
+	public void start(){
+		/* create the UI systems */
 		EntityManager em = this.getEntityManager();
 		
-		/* create the UI systems */
 		super.addSystem(new LoadStageSystem(em, stageId));
 		super.addSystem(new PlayerControlSystem(em));
 		super.addSystem(new AudioSystem(em));
 		super.addSystem(new RenderSystem(em, batch));
 		
+		super.start();
 	}
 
 	public void update(){

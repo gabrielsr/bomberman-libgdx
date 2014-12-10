@@ -1,14 +1,17 @@
 package br.unb.unbomber.systems;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import br.un.unbomber.components.Transform;
 import br.un.unbomber.components.Visual;
 import br.unb.unbomber.component.CellPlacement;
 import br.unb.unbomber.core.BaseSystem;
+import br.unb.unbomber.core.Component;
 import br.unb.unbomber.core.Entity;
 import br.unb.unbomber.core.EntityManager;
-import br.unb.unbomber.core.StageSpec;
+import br.unb.unbomber.ui.skin.LoadTexture;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,9 +20,6 @@ import com.badlogic.gdx.utils.Array;
 
 public class RenderSystem extends BaseSystem {
 
-	static final float FRUSTUM_WIDTH = 10;
-	static final float FRUSTUM_HEIGHT = 15;
-	static final float PIXELS_TO_METRES = 1.0f / 32.0f;
 	
 	private OrthographicCamera cam;
 	private Array<Entity> renderQueue;
@@ -35,8 +35,6 @@ public class RenderSystem extends BaseSystem {
 			SpriteBatch batch) {
 		super(entityManager);
 		this.batch = batch;
-				
-		renderQueue = new Array<Entity>();
 		
 		comparator = new Comparator<Entity>() {
 			@Override
@@ -51,37 +49,38 @@ public class RenderSystem extends BaseSystem {
 		};
 		
 		this.batch = batch;
-		
-		cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		cam.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
-		
-		
+
 	}
 
 	@Override
 	public void start() {
-		loadSprites(null);
+		
+		cam = new OrthographicCamera();
+		cam.setToOrtho(false, 640, 480);
 	}
 
 	
 	@Override
 	public void update() {
-		//super.update();
+		LoadTexture.load(getEntityManager());
+
+		List<Component> renderQueue = new ArrayList<Component>();
+		renderQueue.addAll(getEntityManager().getComponents(Visual.class));
 		
-		renderQueue.sort(comparator);
+		//renderQueue.sort(comparator);
 		
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
 		
-		for (Entity entity : renderQueue) {
-			Visual vis =  getVisual(entity);
-			
+		for (Component visComponent : renderQueue) {
+			Visual vis = (Visual) visComponent;
 			if (vis.getRegion() == null) {
 				continue;
 			}
 			
-			Transform t = vis.getTransform();
+			CellPlacement cellPlacement = (CellPlacement) getEntityManager().getComponent(CellPlacement.class, vis.getEntityId());
+			Transform t = updatePos(vis, cellPlacement);
 		
 			float width = vis.getRegion().getRegionWidth();
 			float height = vis.getRegion().getRegionHeight();
@@ -92,7 +91,7 @@ public class RenderSystem extends BaseSystem {
 					   t.posx - originX, t.posy - originY,
 					   originX, originY,
 					   width, height,
-					   t.scalex * PIXELS_TO_METRES, t.scaley * PIXELS_TO_METRES,
+					   t.scalex, t.scaley,
 					   MathUtils.radiansToDegrees * t.rotation);
 		}
 		
@@ -100,12 +99,15 @@ public class RenderSystem extends BaseSystem {
 		renderQueue.clear();
 	}
 	
-
-
-	private void loadSprites(StageSpec stage) {
-		// TODO Auto-generated method stub
-
+	private Transform updatePos(Visual vis, CellPlacement cellPlacement) {
+		
+		// TODO make it right (and prettier)
+		
+		vis.getTransform().posx = cellPlacement.getCellX()*32;
+		vis.getTransform().posy = cellPlacement.getCellY()*-32 + 468;
+		return vis.getTransform();
 	}
+
 	
 	public void processEntity(Entity entity) {
 		renderQueue.add(entity);
