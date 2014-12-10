@@ -4,27 +4,42 @@ entities: [
 		components: [
 			{
 				class: br.unb.unbomber.component.CellPlacement,
-				cellX: 4,
+				cellX: 2,
+				cellY: 2
+			},{
+				class: br.unb.unbomber.component.Draw,
+				type: character
+			},
+		]
+	},
+	{
+		components: [
+			{
+				class: br.unb.unbomber.component.CellPlacement,
+				cellX: 2,
 				cellY: 3
-			}
+			},{
+				class: br.unb.unbomber.component.Draw,
+				type: bomb
+			},
 		]
 	}
 ],
 name: "Stage Teste",
 mapRepresentation: 
 "
-###################
-#  @@@@@@@@@@@@@@@# 
-# #@#@#@#@#@#@#@#@#
-#@# #@# #@# #@# # #
-# #@# #@# # # # # #
-# #@#@#@#@#@#@#@#@#
-#@# #@# #@# #@# # #
-# #@# #@# # # # # #
-# #@#@#@#@#@#@#@#@#
-#@# #@# #@# #@# # #
-# #@# #@# # # # # #
-#  @@@@@@@@@@@@@@@# 
-###################
+####################
+##  @@@@@@@@@@@@@@## 
+## #@#@#@#@#@#@#@###
+##  @@@@@@@@@@@@@@## 
+##@# #@# #@# #@# ###
+##  @@@@@@@@@@@@@@## 
+## #@# #@# # # # ###
+##  @@@@@@@@@@@@@@## 
+## #@#@#@#@#@#@#@###
+##  @@@@@@@@@@@@@@## 
+##@# #@# #@# #@# ###
+##  @@@@@@@@@@@@@@## 
+####################
 "
 }

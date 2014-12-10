@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.un.unbomber.components.SimpleAnimation;
 import br.un.unbomber.components.Transform;
 import br.un.unbomber.components.Visual;
 import br.unb.bomberman.ui.screens.Assets;
@@ -45,6 +46,13 @@ public class LoadTexture {
 			vis = new Visual(Assets.backgroundHBlock); 
 		}else if("softBlock".equals(type)){
 			vis = new Visual(Assets.backgroundSBlock); 
+		}else if("character".equals(type)){
+			vis = new Visual(Assets.walkingFront); 
+			trans.scalex = 1.2f;
+			trans.scaley = 1.2f;
+			trans.dy=  8;
+		}else if("bomb".equals(type)){
+			vis = new Visual(Assets.bomb); 
 		}else{
 			vis = new Visual(Assets.backgroundGround);
 		}

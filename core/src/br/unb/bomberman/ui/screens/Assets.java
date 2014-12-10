@@ -42,6 +42,13 @@ public class Assets {
 	public static TextureRegion backgroundSBlock;
 	public static TextureRegion backgroundHBlock;
 
+	public static Texture walking;
+	public static TextureRegion walkingFront;
+
+	public static Texture bombs;
+	public static TextureRegion normalBomb;
+	public static Animation bomb;
+	
 	public static Texture items;
 	public static TextureRegion mainMenu;
 	public static TextureRegion pauseMenu;
@@ -70,6 +77,7 @@ public class Assets {
 	public static Sound hitSound;
 	public static Sound coinSound;
 	public static Sound clickSound;
+	
 
 	public static Texture loadTexture (String file) {
 		return new Texture(Gdx.files.internal(file));
@@ -80,6 +88,14 @@ public class Assets {
 		backgroundGround = new TextureRegion(background, 0, 0, 32, 32);
 		backgroundSBlock = new TextureRegion(background, 64, 0, 32, 32);
 		backgroundHBlock = new TextureRegion(background, 96, 0, 32, 32);
+
+		walking = loadTexture("walking.png");
+		walkingFront = new TextureRegion(walking, 8*218/12, 0, 218/12, 22);
+
+		bombs = loadTexture("bomb_anim.png");
+		normalBomb = new TextureRegion(bombs, 0, 0, 28, 28);
+		bomb = new Animation(0.8f, new TextureRegion(bombs, 0, 0, 32, 32), new TextureRegion(bombs, 32, 0, 32, 32),
+				new TextureRegion(bombs, 64, 0, 32, 32), new TextureRegion(bombs, 32, 0, 32, 32));
 
 		items = loadTexture("data/items.png");
 		mainMenu = new TextureRegion(items, 0, 224, 300, 110);
