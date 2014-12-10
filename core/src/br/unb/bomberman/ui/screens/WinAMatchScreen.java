@@ -7,16 +7,26 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class WinAMatchScreen implements Screen{
 
 	final GDXGame game;
 	
+	private static final int   POSITION_X  = 337;
+    private static final int   POSITION_y  = 320;
+	
 	Texture           background;
     OrthographicCamera camera;
     
     private Stage stage;
+    
+    Texture   walker;
+	Texture   medal;
+    
+    TextureRegion   FrameWalker; 
+    TextureRegion   FrameMedal; 
     
     public WinAMatchScreen (final GDXGame game){
     	this.game = game;
@@ -26,14 +36,19 @@ public class WinAMatchScreen implements Screen{
         
         //The background
         background = new Texture(Gdx.files.local("win.png"));
+        //Character and medal
+        walker = new Texture(Gdx.files.local("data/character1/walking-left.png"));
+        medal = new Texture(Gdx.files.local("medal.png"));
         
-        // Game Main Menu Building
+        // Menu Building
         stage = new Stage();
         stage.clear();
         Gdx.input.setInputProcessor(stage);
         MenuButtonFactory factory = new MenuButtonFactory();
         stage.addActor(factory.makeMenuButton(game, "Play Again", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
         stage.addActor(factory.makeMenuButton(game, "Quit", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
+        
+        
     }
     
 	@Override
@@ -47,6 +62,8 @@ public class WinAMatchScreen implements Screen{
         
         game.batch.begin();
         game.batch.draw(background, -28, -122, 864, 720);
+        
+        //desenhar o personagem
         
         // Forces the render
         game.batch.flush();

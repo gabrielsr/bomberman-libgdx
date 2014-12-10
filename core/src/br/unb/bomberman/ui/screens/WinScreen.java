@@ -33,7 +33,7 @@ public class WinScreen implements Screen {
 	        stage.clear();
 	        Gdx.input.setInputProcessor(stage);
 	        MenuButtonFactory factory = new MenuButtonFactory();
-	        stage.addActor(factory.makeMenuButton(game, "Play Again", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
+	        stage.addActor(factory.makeMenuButton(game, "New Game", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
 	        stage.addActor(factory.makeMenuButton(game, "Quit", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
 	    }
 	    
