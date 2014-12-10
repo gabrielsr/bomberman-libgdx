@@ -37,6 +37,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  *
  */
 public class Assets {
+	
 	public static Texture background;
 	public static TextureRegion backgroundGround;
 	public static TextureRegion backgroundSBlock;
@@ -46,8 +47,10 @@ public class Assets {
 	public static TextureRegion walkingFront;
 
 	public static Texture bombs;
-	public static TextureRegion normalBomb;
 	public static Animation bomb;
+	
+	public static Texture explosion;	
+	public static TextureRegion explosionCenter;
 	
 	public static Texture items;
 	public static TextureRegion mainMenu;
@@ -93,10 +96,13 @@ public class Assets {
 		walkingFront = new TextureRegion(walking, 8*218/12, 0, 218/12, 22);
 
 		bombs = loadTexture("bomb_anim.png");
-		normalBomb = new TextureRegion(bombs, 0, 0, 28, 28);
+		
 		bomb = new Animation(0.8f, new TextureRegion(bombs, 0, 0, 32, 32), new TextureRegion(bombs, 32, 0, 32, 32),
 				new TextureRegion(bombs, 64, 0, 32, 32), new TextureRegion(bombs, 32, 0, 32, 32));
 
+		explosion = loadTexture("explosion.png");
+		explosionCenter = new TextureRegion(explosion, 4*32, 0, 32, 32);
+		
 		items = loadTexture("data/items.png");
 		mainMenu = new TextureRegion(items, 0, 224, 300, 110);
 		pauseMenu = new TextureRegion(items, 224, 128, 192, 96);

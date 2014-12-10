@@ -4,13 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class SimpleAnimation implements TextureRegionSource {
+public class SequenceAnimation implements TextureRegionSource {
 
 	float stateTime = 0f;
 	
 	private final Animation animation;
 	
-	public SimpleAnimation(Animation animation) {
+	public SequenceAnimation(Animation animation) {
 		this.animation = animation;
 	}
 

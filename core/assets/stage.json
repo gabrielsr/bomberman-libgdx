@@ -1,4 +1,21 @@
 {
+name: "Stage Teste",
+mapRepresentation: 
+"
+####################
+##  @@@@@@@@@@@@@@## 
+## #@#@#@#@#@#@#@###
+##  @@@@@@@@@@@@@@## 
+##@# #@# #@# #@# ###
+##  @@@@@@@@@@@@@@## 
+## #@# #@# # # # ###
+##  @@@@@@@@@@@@@@## 
+## #@#@#@#@#@#@#@###
+##  @@@@@@@@@@@@@@## 
+##@# #@# #@# #@# ###
+##  @@@@@@@@@@@@@@## 
+####################
+",
 entities: [
 	{
 		components: [
@@ -23,23 +40,34 @@ entities: [
 				type: bomb
 			},
 		]
+	},
+	{
+		components: [
+			{
+				class: br.unb.unbomber.component.CellPlacement,
+				cellX: 2,
+				cellY: 4
+			},{
+				class: br.unb.unbomber.component.Explosion,
+				explosionRange: 2,
+				countdown:270
+			},{
+				class: br.unb.unbomber.component.Draw,
+				type: explosion
+			},
+		]
 	}
 ],
-name: "Stage Teste",
-mapRepresentation: 
-"
-####################
-##  @@@@@@@@@@@@@@## 
-## #@#@#@#@#@#@#@###
-##  @@@@@@@@@@@@@@## 
-##@# #@# #@# #@# ###
-##  @@@@@@@@@@@@@@## 
-## #@# #@# # # # ###
-##  @@@@@@@@@@@@@@## 
-## #@#@#@#@#@#@#@###
-##  @@@@@@@@@@@@@@## 
-##@# #@# #@# #@# ###
-##  @@@@@@@@@@@@@@## 
-####################
-"
+events: [
+	{ 
+		class: br.unb.unbomber.event.ExplosionStartedEvent,
+		initialPosition:{
+			class: br.unb.unbomber.component.CellPlacement,
+			cellX: 2,
+			cellY: 4
+		},
+		explosionRange:10
+	}
+]
+
 }

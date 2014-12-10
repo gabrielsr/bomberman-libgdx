@@ -7,6 +7,7 @@ import br.unb.unbomber.component.ExplosionBarrier.ExplosionBarrierType;
 import br.unb.unbomber.core.BaseSystem;
 import br.unb.unbomber.core.Entity;
 import br.unb.unbomber.core.EntityManager;
+import br.unb.unbomber.core.Event;
 import br.unb.unbomber.core.StageSpec;
 
 import com.badlogic.gdx.Gdx;
@@ -83,6 +84,10 @@ public class LoadStageSystem extends BaseSystem {
 
 		for (Entity entity : stage.getEntities()) {
 			getEntityManager().addEntity(entity);
+		}
+		
+		for (Event event : stage.getEvents()) {
+			getEntityManager().addEvent(event);;
 		}
 	}
 
