@@ -28,7 +28,7 @@ public class Visual extends Component {
 	}
 	
 	public Visual(Animation animation) {
-		this.source = new SimpleAnimation(animation);
+		this.source = new SequenceAnimation(animation);
 	}
 
 	public TextureRegion getRegion() {
