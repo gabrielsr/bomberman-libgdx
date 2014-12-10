@@ -12,5 +12,12 @@ public class Transform {
 	public float posy = 0;
 	public float scalex = 1;
 	public float scaley = 1;
+	
+	/**
+	 * Deslocamento do centro da imagem ao centro ao 
+	 * centro lógico do objeto
+	 */
+	public float dx = 0;
+	public float dy = 0;
 
 }

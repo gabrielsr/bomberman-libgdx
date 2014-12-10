@@ -88,7 +88,8 @@ public class RenderSystem extends BaseSystem {
 			float originY = height * 0.5f;
 			
 			batch.draw(vis.getRegion(),
-					   t.posx - originX, t.posy - originY,
+					   t.posx - originX + t.dx, 
+					   t.posy - originY + t.dy,
 					   originX, originY,
 					   width, height,
 					   t.scalex, t.scaley,
@@ -103,8 +104,8 @@ public class RenderSystem extends BaseSystem {
 		
 		// TODO make it right (and prettier)
 		
-		vis.getTransform().posx = cellPlacement.getCellX()*32;
-		vis.getTransform().posy = cellPlacement.getCellY()*-32 + 468;
+		vis.getTransform().posx = cellPlacement.getCellX()*32 + 16;
+		vis.getTransform().posy = cellPlacement.getCellY()*-32 + 480 - 32 -16;
 		return vis.getTransform();
 	}
 
