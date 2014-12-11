@@ -75,6 +75,7 @@ public class LoadStageSystem extends BaseSystem {
 	
 		block.addComponent(new Draw(drawType));
 		block.addComponent(cell);
+		block.addComponent(explosionBarrier);
 		getEntityManager().update(block);
 	}
 
