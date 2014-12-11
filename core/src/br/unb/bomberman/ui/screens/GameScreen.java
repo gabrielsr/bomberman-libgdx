@@ -29,6 +29,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 public class GameScreen extends ScreenAdapter {
+	static final int GAME_NOT_SELECTED = -1;
 	static final int GAME_READY = 0;
 	static final int GAME_RUNNING = 1;
 	static final int GAME_PAUSED = 2;
@@ -50,11 +51,22 @@ public class GameScreen extends ScreenAdapter {
 	BomberMatchWithUi match;
 	
 	private int state;
+	private final String stageId;
 
 	public GameScreen (GDXGame game, String stageId) {
 		this.game = game;
+		this.stageId = stageId;
+		state = GAME_NOT_SELECTED;
+	}
+	
+	@Override
+	public void show(){
+		loadGame();
+		match.start();
+	}
 
-		state = GAME_READY;
+	private void loadGame() {
+		
 		guiCam = new OrthographicCamera(320, 480);
 		guiCam.position.set(320 / 2, 480 / 2, 0);
 		touchPoint = new Vector3();
@@ -67,13 +79,11 @@ public class GameScreen extends ScreenAdapter {
 
 		lastScore = 0;
 		scoreString = "SCORE: 0";
+		state = GAME_READY;
 		
 		pauseSystems();
-	}
-	
-	@Override
-	public void show(){
-		match.start();
+
+		
 	}
 
 	public void update (float deltaTime) {
