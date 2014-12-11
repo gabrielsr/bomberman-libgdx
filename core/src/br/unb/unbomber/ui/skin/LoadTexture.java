@@ -48,11 +48,13 @@ public class LoadTexture {
 			vis = new Visual(Assets.backgroundSBlock); 
 		}else if("character".equals(type)){
 			vis = new Visual(Assets.walkingFront); 
-			trans.scalex = 1.2f;
-			trans.scaley = 1.2f;
-			trans.dy=  8;
+			trans.scalex = 1.6f;
+			trans.scaley = 1.6f;
+			trans.dy=  12;
 		}else if("bomb".equals(type)){
-			vis = new Visual(Assets.bomb); 
+			vis = new Visual(Assets.bomb);
+			trans.scalex = 0.8f;
+			trans.scaley = 0.8f;
 		}else if("explosion".equals(type)){
 			vis = new Visual(Assets.explosionCenter); 
 		}else{
