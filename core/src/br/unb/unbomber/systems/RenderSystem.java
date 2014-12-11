@@ -3,10 +3,12 @@ package br.unb.unbomber.systems;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
 
 import br.un.unbomber.components.Transform;
 import br.un.unbomber.components.Visual;
 import br.unb.unbomber.component.CellPlacement;
+import br.unb.unbomber.component.Draw;
 import br.unb.unbomber.core.BaseSystem;
 import br.unb.unbomber.core.Component;
 import br.unb.unbomber.core.Entity;
@@ -80,6 +82,11 @@ public class RenderSystem extends BaseSystem {
 			}
 			
 			CellPlacement cellPlacement = (CellPlacement) getEntityManager().getComponent(CellPlacement.class, vis.getEntityId());
+			if(cellPlacement==null){
+				Draw draw = (Draw) getEntityManager().getComponent(Draw.class,  vis.getEntityId());
+				LOGGER.log(Level.SEVERE, "trying to draw a "+ draw.getType() +"\n But it has not a placement");
+				continue;
+			}
 			Transform t = updatePos(vis, cellPlacement);
 		
 			float width = vis.getRegion().getRegionWidth();
