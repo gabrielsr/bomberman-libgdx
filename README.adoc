@@ -31,3 +31,16 @@ das dependências do Gradle.
 Para ter acesso as classes do projeto bomberman, no bomberman-libgdx-core:
 
 Clique com o botão direito no projeto libgdx-core > properties > Java Build Path>  Aba "Projects"  e inclua o projeto bomberman. 
+
+
+== Execução do Projeto ==
+
+No eclipse, como o projeto corretamete configurado, vá em projeto [bomberman-ui-desktop] -> src -> DesktopLauncher.java 
+
+Clique com o botão direito e 
+
+ Run As => Java Application
+
+Para debugar coloque um brake point clicando ao lado do número da linha que deseja e executando o aplicativo em modo debug:
+
+ Debug As => Java Application.
