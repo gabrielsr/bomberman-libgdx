@@ -1,7 +1,6 @@
 package br.unb.unbomber;
 
 import br.unb.bomberman.ui.screens.Assets;
-import br.unb.bomberman.ui.screens.GameScreen;
 import br.unb.bomberman.ui.screens.MainMenuScreen;
 
 import com.badlogic.gdx.Game;
@@ -10,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GDXGame extends Game {
     
     public final String FIRST_STAGE_LEVEL_ID = "stage";
-
+    public final String TEST_STAGE_EXPLOSION = "test/explosion";
 	
 	public SpriteBatch batch;
 	

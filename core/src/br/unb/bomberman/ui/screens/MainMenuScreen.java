@@ -77,6 +77,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(factory.makeMenuButton(game, "High Scores", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
         stage.addActor(factory.makeMenuButton(game, "Settings", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
         stage.addActor(factory.makeMenuButton(game, "How to Play", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
+        stage.addActor(factory.makeMenuButton(game, "Tests", new TestListMenuScreen(game)));
     }
     
     private Animation createWalkingFrame( Texture walkSheet){

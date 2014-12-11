@@ -30,38 +30,7 @@ entities: [
 				class: br.unb.unbomber.component.BombDropper,
 				explosionRange:5,
 				permittedSimultaneousBombs:2
-			},{
-				class: br.unb.unbomber.component.Movable,
-				speed:3
 			}
-		]
-	},
-	{
-		components: [
-			{
-				class: br.unb.unbomber.component.CellPlacement,
-				cellX: 2,
-				cellY: 3
-			},{
-				class: br.unb.unbomber.component.Draw,
-				type: bomb
-			},
-		]
-	},
-	{
-		components: [
-			{
-				class: br.unb.unbomber.component.CellPlacement,
-				cellX: 2,
-				cellY: 4
-			},{
-				class: br.unb.unbomber.component.Explosion,
-				explosionRange: 2,
-				countdown:270
-			},{
-				class: br.unb.unbomber.component.Draw,
-				type: explosion
-			},
 		]
 	}
 ],
