@@ -66,15 +66,6 @@ entities: [
 	}
 ],
 events: [
-	{ 
-		class: br.unb.unbomber.event.ExplosionStartedEvent,
-		initialPosition:{
-			class: br.unb.unbomber.component.CellPlacement,
-			cellX: 2,
-			cellY: 4
-		},
-		explosionRange:10
-	}
 ]
 
 }
