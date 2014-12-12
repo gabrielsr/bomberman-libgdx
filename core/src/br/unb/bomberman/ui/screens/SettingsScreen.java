@@ -51,8 +51,7 @@ public class SettingsScreen implements Screen {
 		stage = new Stage();
 		stage.clear();
 		MenuButtonFactory factory = new MenuButtonFactory();
-		stage.addActor(factory
-				.makeMenuButton(game, "Back", game.mainMenuScreen));
+		stage.addActor(factory.makeMenuButton(game, "Back", game.mainMenuScreen));
 	}
 
 	@Override

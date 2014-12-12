@@ -145,7 +145,7 @@ public class GameScreen extends ScreenAdapter {
 			else
 				scoreString = "SCORE: " + lastScore;
 			pauseSystems();
-			Settings.addScore(lastScore);
+			Settings.addScore("Player", lastScore);
 			Settings.save();
 		}
 	}

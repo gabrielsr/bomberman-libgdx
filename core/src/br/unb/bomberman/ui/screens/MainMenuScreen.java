@@ -166,7 +166,7 @@ public class MainMenuScreen implements Screen {
 		MenuButtonFactory factory = new MenuButtonFactory();
 		stage.addActor(factory.makeMenuButton(game, "New Game", new GameScreen(
 				game, game.FIRST_STAGE_LEVEL_ID)));
-		stage.addActor(factory.makeMenuButton(game, "High Scores",
+		stage.addActor(factory.makeMenuButton(game, "Highscores",
 				game.highScoresScreen));
 		stage.addActor(factory.makeMenuButton(game, "Settings",
 				game.settingsScreen));

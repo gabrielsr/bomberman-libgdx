@@ -7,7 +7,7 @@ public class PlayerSpec {
 
 	private List<Player> players;
 
-	public static class Player {
+	public static class Player implements Comparable<Player>{
 
 		public String playerName;
 
@@ -27,6 +27,18 @@ public class PlayerSpec {
 
 		public void setScore(int score) {
 			this.score = score;
+		}
+
+		@Override
+		public int compareTo(Player otherPlayer) {
+			int otherScore = otherPlayer.getScore();
+			if (this.score > otherScore) {
+				return -1;
+			}
+			else if (this.score == otherScore) {
+				return 0;
+			}
+			return 1;
 		}
 
 	}
