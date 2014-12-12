@@ -88,8 +88,6 @@ public class GameScreen extends ScreenAdapter {
 
 	public void update (float deltaTime) {
 		if (deltaTime > 0.1f) deltaTime = 0.1f;
-
-		match.update();
 		
 		switch (state) {
 		case GAME_READY:
@@ -229,6 +227,8 @@ public class GameScreen extends ScreenAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.draw(Assets.pause, 320 - 64, 480 - 64, 64, 64);
 		Assets.font.draw(game.batch, scoreString, 16, 480 - 20);
+		
+		match.update();
 	}
 
 	private void presentPaused () {
