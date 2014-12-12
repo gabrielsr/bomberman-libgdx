@@ -15,7 +15,7 @@ public class Transform {
 	
 	/**
 	 * Deslocamento do centro da imagem ao centro ao 
-	 * centro lógico do objeto
+	 * centro logico do objeto
 	 */
 	public float dx = 0;
 	public float dy = 0;
