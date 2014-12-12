@@ -136,7 +136,7 @@ public class GameScreen extends ScreenAdapter {
 			scoreString = "SCORE: " + lastScore;
 		}
 		if (match.state == State.WORLD_STATE_NEXT_LEVEL) {
-			game.setScreen(new WinScreen(game));
+			game.setScreen(game.winAMatchScreen);
 		}
 		if (match.state == State.WORLD_STATE_GAME_OVER) {
 			state = GAME_OVER;
@@ -171,7 +171,7 @@ public class GameScreen extends ScreenAdapter {
 				Assets.music.setVolume(Settings.soundVolume);
 				state = GAME_READY;
 				game.getScreen().dispose();
-				game.setScreen(new MainMenuScreen(game));
+				game.setScreen(game.mainMenuScreen);
 				return;
 			}
 		}
@@ -192,7 +192,7 @@ public class GameScreen extends ScreenAdapter {
 
 	private void updateGameOver () {
 		if (Gdx.input.justTouched()) {
-			game.setScreen(new MainMenuScreen(game));
+			game.setScreen(game.mainMenuScreen);
 		}
 	}
 

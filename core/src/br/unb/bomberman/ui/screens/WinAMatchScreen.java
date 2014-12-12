@@ -14,9 +14,6 @@ public class WinAMatchScreen implements Screen{
 
 	final GDXGame game;
 	
-	private static final int   POSITION_X  = 337;
-    private static final int   POSITION_y  = 320;
-	
 	Texture           background;
     OrthographicCamera camera;
     
@@ -46,7 +43,7 @@ public class WinAMatchScreen implements Screen{
         Gdx.input.setInputProcessor(stage);
         MenuButtonFactory factory = new MenuButtonFactory();
         stage.addActor(factory.makeMenuButton(game, "Play Again", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
-        stage.addActor(factory.makeMenuButton(game, "Quit", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
+        stage.addActor(factory.makeMenuButton(game, "Quit", game.mainMenuScreen));
         
         
     }
