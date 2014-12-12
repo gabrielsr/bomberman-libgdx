@@ -1,0 +1,34 @@
+{
+players:
+    [{
+        playerName: "Player ABC",
+        score: 512
+    },{
+        playerName: "Player DEF",
+        score: 256
+    },{
+        playerName: "Player GHI",
+        score: 128
+    },{
+        playerName: "Player JKL",
+        score: 64
+    },{
+        playerName: "Player MNO",
+        score: 32
+    },{
+        playerName: "Player PQR",
+        score: 16
+    },{
+        playerName: "Player STU",
+        score: 8
+    },{
+        playerName: "Player VXW",
+        score: 4
+    },{
+        playerName: "Player YYY",
+        score: 2
+    },{
+        playerName: "Player ZZZ",
+        score: 1
+    }]
+}
