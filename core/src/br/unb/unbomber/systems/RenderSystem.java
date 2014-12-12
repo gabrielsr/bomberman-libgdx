@@ -73,7 +73,6 @@ public class RenderSystem extends BaseSystem {
 		
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
-		batch.begin();
 		
 		for (Component visComponent : renderQueue) {
 			Visual vis = (Visual) visComponent;
@@ -102,8 +101,6 @@ public class RenderSystem extends BaseSystem {
 					   t.scalex, t.scaley,
 					   MathUtils.radiansToDegrees * t.rotation);
 		}
-		
-		batch.end();
 		renderQueue.clear();
 	}
 	
