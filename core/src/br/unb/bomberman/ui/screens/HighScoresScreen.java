@@ -1,12 +1,15 @@
 package br.unb.bomberman.ui.screens;
 
+import java.util.Collections;
+import java.util.List;
+
 import br.unb.bomberman.ui.screens.PlayerSpec.Player;
 import br.unb.unbomber.GDXGame;
+import br.unb.unbomber.Settings;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Json;
 
 /**
  * Screen to show TOP 10 scores Scores are stored in a json file
@@ -26,10 +28,8 @@ import com.badlogic.gdx.utils.Json;
 public class HighScoresScreen implements Screen {
 
 	// TODO fix the score path
-	private final String SCORES_FILE = "../core/assets/scores.json"; 
-	
 	final GDXGame game;
-	private PlayerSpec playersSpec;
+	
 	private Texture background;
 	private OrthographicCamera camera;
 	private Stage stage;
@@ -75,21 +75,17 @@ public class HighScoresScreen implements Screen {
 	}
 
 	private Table loadScores() {
-		//TODO layout improvements
-		Json json = new Json();
-		FileHandle scoresFile = Gdx.files.local(SCORES_FILE);
 		Table table = new Table();
 		LabelStyle style = new LabelStyle(Assets.font, Color.WHITE);
 		Skin skin = new Skin();
 		skin.add("default", style, LabelStyle.class);
-		playersSpec = json.fromJson(PlayerSpec.class, scoresFile.reader());
-		int pos = 1;
-		for (Player player : playersSpec.getPlayers()) {
-			Label name = new Label(String.valueOf(pos++) + ". "
-					+ player.getPlayerName(), skin);
-			Label score = new Label(String.valueOf(player.getScore()), skin);
-			table.add(name).pad(2);
-			table.add(score).pad(2);
+		List<Player> players = Settings.getScores();
+		Collections.sort(players);
+		for (int pos = 0; pos < 10 && pos < players.size(); pos++) {
+			Label name = new Label(String.valueOf(pos+1) + ". " + players.get(pos).getPlayerName(), skin);
+			Label score = new Label(String.valueOf(players.get(pos).getScore()), skin);
+			table.add(name).pad(2).left();
+			table.add(score).pad(2).right();
 			table.row();
 		}
 		table.setFillParent(true);

@@ -130,9 +130,7 @@ public class Assets {
 		font = new BitmapFont(Gdx.files.internal("data/font.fnt"), Gdx.files.internal("data/font.png"), false);
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
-		music.setLooping(true);
-		music.setVolume(Settings.soundVolume);
-		if (Settings.soundEnabled) music.play();
+		if (Settings.musicEnabled) Settings.enableMusic();
 		jumpSound = Gdx.audio.newSound(Gdx.files.internal("data/jump.wav"));
 		highJumpSound = Gdx.audio.newSound(Gdx.files.internal("data/highjump.wav"));
 		hitSound = Gdx.audio.newSound(Gdx.files.internal("data/hit.wav"));
@@ -145,8 +143,6 @@ public class Assets {
 		bobHit.setPlayMode(PlayMode.LOOP);
 		squirrelFly.setPlayMode(PlayMode.LOOP);
 		platform.setPlayMode(PlayMode.LOOP);
-		
-		
 	}
 
 	public static void playSound (Sound sound) {
