@@ -25,8 +25,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class GameScreen extends ScreenAdapter {
 	static final int GAME_NOT_SELECTED = -1;
@@ -37,6 +39,8 @@ public class GameScreen extends ScreenAdapter {
 	static final int GAME_OVER = 4;
 	
 	GDXGame game;
+	
+	Texture hud;
 
 	OrthographicCamera guiCam;
 	Vector3 touchPoint;
@@ -78,7 +82,8 @@ public class GameScreen extends ScreenAdapter {
 		quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
 
 		lastScore = 0;
-		scoreString = "SCORE: 0";
+		scoreString = "0";
+		
 		state = GAME_READY;
 		
 		pauseSystems();
@@ -225,8 +230,17 @@ public class GameScreen extends ScreenAdapter {
 	private void presentRunning () {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		game.batch.draw(Assets.pause, 320 - 64, 480 - 64, 64, 64);
-		Assets.font.draw(game.batch, scoreString, 16, 480 - 20);
+		//Assets.font.draw(game.batch, scoreString, 16, 480 - 20);
+		game.batch.draw(Assets.hudBar, 0, 410, 320, 60);
+		game.batch.draw(Assets.pause, 320 - 40, 480 - 64, 48, 48);
+		game.batch.draw(Assets.p1, 320 - 224, 480 - 56, 20, 24);
+		game.batch.draw(Assets.boxScore, 320 - 200, 480 - 56, 16, 24);
+		game.batch.draw(Assets.p2, 320 - 178, 480 - 56, 20, 24);
+		game.batch.draw(Assets.boxScore, 320 - 154, 480 - 56, 16, 24);
+		game.batch.draw(Assets.p3, 320 - 132, 480 - 56, 20, 24);
+		game.batch.draw(Assets.boxScore, 320 - 108, 480 - 56, 16, 24);
+		game.batch.draw(Assets.p4, 320 - 86, 480 - 56, 20, 24);
+		game.batch.draw(Assets.boxScore, 320 - 60, 480 - 56, 16, 24);
 		
 		match.update();
 	}

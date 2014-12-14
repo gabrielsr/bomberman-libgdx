@@ -42,6 +42,18 @@ public class Assets {
 	public static TextureRegion backgroundGround;
 	public static TextureRegion backgroundSBlock;
 	public static TextureRegion backgroundHBlock;
+	
+	public static Texture hud;
+	public static TextureRegion hudBar;
+	
+	public static Texture players;
+	public static TextureRegion p1;
+	public static TextureRegion p2;
+	public static TextureRegion p3;
+	public static TextureRegion p4;
+	
+	public static Texture box;
+	public static TextureRegion boxScore;
 
 	public static Texture walking;
 	public static TextureRegion walkingFront;
@@ -91,9 +103,21 @@ public class Assets {
 		backgroundGround = new TextureRegion(background, 0, 0, 32, 32);
 		backgroundSBlock = new TextureRegion(background, 64, 0, 32, 32);
 		backgroundHBlock = new TextureRegion(background, 96, 0, 32, 32);
+		
+		hud = loadTexture("HUD.png");
+		hudBar = new TextureRegion(hud, 0, 0, 640, 64);
+		
+		players = loadTexture("pants_icons.png");
+		p1 = new TextureRegion(players, 0, 0, 184/4 , 26);
+		p2 = new TextureRegion(players, 46, 0, 184/4 , 26);
+		p3 = new TextureRegion(players, 92, 0, 184/4 , 26);
+		p4 = new TextureRegion(players, 138, 0, 184/4 , 26);
+		
+		box = loadTexture("score_rectangle.png");
+		boxScore = new TextureRegion(box, 0, 0, 32, 32);
 
 		walking = loadTexture("walking.png");
-		walkingFront = new TextureRegion(walking, 8*218/12, 0, 218/12, 22);
+		walkingFront = new TextureRegion(walking, 8*218/12, 0, 218/12, 22);	
 
 		bombs = loadTexture("bomb_anim.png");
 		
