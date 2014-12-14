@@ -21,20 +21,6 @@ public class WinScreen implements Screen {
 	    
 	    public WinScreen (final GDXGame game){
 	    	this.game = game;
-
-	        camera = new OrthographicCamera();
-	        camera.setToOrtho(false, 800, 480);
-	        
-	        //The background
-	        background = new Texture(Gdx.files.local("win.png"));
-	        
-	        // Game Main Menu Building
-	        stage = new Stage();
-	        stage.clear();
-	        Gdx.input.setInputProcessor(stage);
-	        MenuButtonFactory factory = new MenuButtonFactory();
-	        stage.addActor(factory.makeMenuButton(game, "New Game", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
-	        stage.addActor(factory.makeMenuButton(game, "Quit", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
 	    }
 	    
 		@Override
@@ -67,8 +53,17 @@ public class WinScreen implements Screen {
 
 		@Override
 		public void show() {
-			// TODO Auto-generated method stub
-			
+	        camera = new OrthographicCamera();
+	        camera.setToOrtho(false, 800, 480);
+	        //The background
+	        background = new Texture(Gdx.files.local("win.png"));
+	        // Game Main Menu Building
+	        stage = new Stage();
+	        stage.clear();
+	        Gdx.input.setInputProcessor(stage);
+	        MenuButtonFactory factory = new MenuButtonFactory();
+	        stage.addActor(factory.makeMenuButton(game, "New Game", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
+	        stage.addActor(factory.makeMenuButton(game, "Quit", game.mainMenuScreen));
 		}
 
 		@Override

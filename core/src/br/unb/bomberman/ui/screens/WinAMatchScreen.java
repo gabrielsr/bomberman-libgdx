@@ -26,26 +26,7 @@ public class WinAMatchScreen implements Screen{
     TextureRegion   FrameMedal; 
     
     public WinAMatchScreen (final GDXGame game){
-    	this.game = game;
-
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
-        
-        //The background
-        background = new Texture(Gdx.files.local("win.png"));
-        //Character and medal
-        walker = new Texture(Gdx.files.local("data/character1/walking-left.png"));
-        medal = new Texture(Gdx.files.local("medal.png"));
-        
-        // Menu Building
-        stage = new Stage();
-        stage.clear();
-        Gdx.input.setInputProcessor(stage);
-        MenuButtonFactory factory = new MenuButtonFactory();
-        stage.addActor(factory.makeMenuButton(game, "Play Again", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
-        stage.addActor(factory.makeMenuButton(game, "Quit", game.mainMenuScreen));
-        
-        
+    	this.game = game;        
     }
     
 	@Override
@@ -80,8 +61,20 @@ public class WinAMatchScreen implements Screen{
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
+        //The background
+        background = new Texture(Gdx.files.local("win.png"));
+        //Character and medal
+        walker = new Texture(Gdx.files.local("data/character1/walking-left.png"));
+        medal = new Texture(Gdx.files.local("medal.png"));
+        // Menu Building
+        stage = new Stage();
+        stage.clear();
+        Gdx.input.setInputProcessor(stage);
+        MenuButtonFactory factory = new MenuButtonFactory();
+        stage.addActor(factory.makeMenuButton(game, "Play Again", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
+        stage.addActor(factory.makeMenuButton(game, "Quit", game.mainMenuScreen));
 	}
 
 	@Override

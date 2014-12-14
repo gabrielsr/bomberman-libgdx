@@ -18,15 +18,7 @@ public class GDXGame extends Game {
     public final String TEST_RENDERIZATION = "test/renderization";
 	public SpriteBatch batch;
 	
-    //Game Screens
-	//We will keep a single instance of each screen around for the life of the game
-	//so that new Screen objects are not being created every screen change
-	public MainMenuScreen mainMenuScreen;
-	public HighScoresScreen highScoresScreen;
-	public SettingsScreen settingsScreen;
-	public TestListMenuScreen testListMenuScreen;
-	public WinAMatchScreen winAMatchScreen;
-	public DrawScreen drawScreen;
+	public MainMenuScreen mainMenuScreen; 
 	
     /**
      *  Load the assets and 
@@ -38,12 +30,6 @@ public class GDXGame extends Game {
 		Assets.load();                
 		
 		mainMenuScreen = new MainMenuScreen(this);
-		highScoresScreen = new HighScoresScreen(this);
-		settingsScreen = new SettingsScreen(this);
-		testListMenuScreen = new TestListMenuScreen(this);
-		winAMatchScreen = new WinAMatchScreen(this);
-		drawScreen = new DrawScreen(this);
-		
 		this.setScreen(mainMenuScreen);
 	}
 

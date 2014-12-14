@@ -27,7 +27,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
  */
 public class HighScoresScreen implements Screen {
 
-	// TODO fix the score path
 	final GDXGame game;
 	
 	private Texture background;
