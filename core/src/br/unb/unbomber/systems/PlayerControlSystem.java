@@ -33,10 +33,10 @@ public class PlayerControlSystem extends BaseSystem {
 			direction = MovementType.MOVE_RIGHT;
 		}
 		if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) {
-			direction = MovementType.MOVE_UP;
+			direction = MovementType.MOVE_DOWN;
 		}
 		if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
-			direction = MovementType.MOVE_DOWN;
+			direction = MovementType.MOVE_UP;
 		}
 		
 		if(direction!=null){
