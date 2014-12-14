@@ -15,7 +15,7 @@ public class GDXGame extends Game {
     
     public final String FIRST_STAGE_LEVEL_ID = "stage";
     public final String TEST_STAGE_EXPLOSION = "test/explosion";
-	
+    public final String TEST_RENDERIZATION = "test/renderization";
 	public SpriteBatch batch;
 	
     //Game Screens

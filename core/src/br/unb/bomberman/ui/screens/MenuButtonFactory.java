@@ -84,6 +84,16 @@ public class MenuButtonFactory {
 		});
 		return button;
 	}
+	
+	public TextButton makeMenuButton(final Game game, final String label, final ClickListener clickListener) {
+		button = new TextButton(label, textButtonStyle);
+		button.setHeight(menuItemHeight);
+		button.setWidth(menuItemWidth);
+		button.setPosition(initPosXMenu, initPosYMenu - menuItemHeight * menuItemNumber);
+		menuItemNumber++;
+		button.addListener(clickListener);
+		return button;
+	}
 
 	/**
 	 * Define default corner X position of the menu
