@@ -1,0 +1,58 @@
+{
+name: "Stage Teste",
+mapRepresentation: 
+"
+
+
+   #
+",
+entities: [
+	{
+		components: [
+			{
+				class: br.unb.unbomber.component.CellPlacement,
+				cellX: 3,
+				cellY: 3
+			},{
+				class: br.unb.unbomber.component.Draw,
+				type: character
+			},{
+				class: br.unb.unbomber.component.BombDropper,
+				explosionRange:5,
+				permittedSimultaneousBombs:2
+			},{
+				class: br.unb.unbomber.component.Movable,
+				speed:0.12
+			},{
+				class: br.unb.unbomber.component.ExplosionBarrier,
+				type: PASS_THROUGH
+			},{
+				class: br.unb.unbomber.component.LifeType,
+				type:CHAR
+			},{
+				class: br.unb.unbomber.component.Health,
+				canTakeDamaged: true,
+			},{
+				class: br.unb.unbomber.component.Control,
+				movement:[
+					{
+						class: br.unb.unbomber.component.ControlPair,
+						key:64,
+						command:MOVE_LEFT
+					},	{
+						class: br.unb.unbomber.component.ControlPair,
+						key:66,
+						command:MOVE_RIGHT
+					}
+				]
+			},{
+				class: br.unb.unbomber.component.AvailableTries,
+				lifeTries:0
+			}
+		]
+	}
+],
+events: [
+]
+
+}
