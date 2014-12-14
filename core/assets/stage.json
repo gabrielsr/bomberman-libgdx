@@ -21,8 +21,8 @@ entities: [
 		components: [
 			{
 				class: br.unb.unbomber.component.CellPlacement,
-				cellX: 2,
-				cellY: 2
+				cellX: 3,
+				cellY: 3
 			},{
 				class: br.unb.unbomber.component.Draw,
 				type: character
@@ -32,7 +32,7 @@ entities: [
 				permittedSimultaneousBombs:2
 			},{
 				class: br.unb.unbomber.component.Movable,
-				speed:3
+				speed:0.12
 			},{
 				class: br.unb.unbomber.component.ExplosionBarrier,
 				type: PASS_THROUGH
@@ -42,6 +42,19 @@ entities: [
 			},{
 				class: br.unb.unbomber.component.Health,
 				canTakeDamaged: true,
+			},{
+				class: br.unb.unbomber.component.Control,
+				movement:[
+					{
+						class: br.unb.unbomber.component.ControlPair,
+						key:64,
+						command:MOVE_LEFT
+					},	{
+						class: br.unb.unbomber.component.ControlPair,
+						key:66,
+						command:MOVE_RIGHT
+					}
+				]
 			},{
 				class: br.unb.unbomber.component.AvailableTries,
 				lifeTries:0
