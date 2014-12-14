@@ -83,7 +83,7 @@ public class RenderSystem extends BaseSystem {
 			CellPlacement cellPlacement = (CellPlacement) getEntityManager().getComponent(CellPlacement.class, vis.getEntityId());
 			if(cellPlacement==null){
 				Draw draw = (Draw) getEntityManager().getComponent(Draw.class,  vis.getEntityId());
-				//LOGGER.log(Level.SEVERE, "trying to draw a "+ draw.getType() +"\n But it has not a placement");
+				LOGGER.log(Level.SEVERE, "trying to draw a "+ draw.getType() +"\n But it has not a placement");
 				continue;
 			}
 			Transform t = updatePos(vis, cellPlacement);
