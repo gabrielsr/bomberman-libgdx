@@ -56,13 +56,20 @@ public class Assets {
 	public static TextureRegion boxScore;
 
 	public static Texture walking;
+	public static Texture walkingDown;
+	public static Texture walkingZombie;
+	public static Texture walkingZombieDown;
 	public static TextureRegion walkingFront;
+	public static TextureRegion walkingZombieFront;
+	public static Animation bomberAnim;
+	public static Animation zombieAnim;
 
 	public static Texture bombs;
 	public static Animation bomb;
 	
 	public static Texture explosion;	
 	public static TextureRegion explosionCenter;
+	public static Animation explosionAnim;
 	
 	public static Texture items;
 	public static TextureRegion mainMenu;
@@ -70,6 +77,7 @@ public class Assets {
 	public static TextureRegion ready;
 	public static TextureRegion gameOver;
 	public static TextureRegion highScoresRegion;
+	public static TextureRegion helpRegion;
 	public static TextureRegion logo;
 	public static TextureRegion soundOn;
 	public static TextureRegion soundOff;
@@ -108,24 +116,37 @@ public class Assets {
 		hudBar = new TextureRegion(hud, 0, 0, 640, 64);
 		
 		players = loadTexture("pants_icons.png");
-		p1 = new TextureRegion(players, 0, 0, 184/4 , 26);
-		p2 = new TextureRegion(players, 46, 0, 184/4 , 26);
-		p3 = new TextureRegion(players, 92, 0, 184/4 , 26);
-		p4 = new TextureRegion(players, 138, 0, 184/4 , 26);
+		p1 = new TextureRegion(players, 0, 0, 184/4 , 28);
+		p2 = new TextureRegion(players, 46, 0, 184/4 , 28);
+		p3 = new TextureRegion(players, 92, 0, 184/4 , 28);
+		p4 = new TextureRegion(players, 138, 0, 184/4 , 28);
 		
 		box = loadTexture("score_rectangle.png");
 		boxScore = new TextureRegion(box, 0, 0, 32, 32);
 
 		walking = loadTexture("walking.png");
-		walkingFront = new TextureRegion(walking, 8*218/12, 0, 218/12, 22);	
 
-		bombs = loadTexture("bomb_anim.png");
+		walkingZombie = loadTexture("walking-zombie.png");
+		walkingFront = new TextureRegion(walking, 8*218/12, 0, 218/12, 22);
+		walkingZombieFront = new TextureRegion(walkingZombie, 8*218/12, 0, 218/12, 22);
+		walkingDown = loadTexture("data/character1/walking-down.png");
+		bomberAnim = new Animation(0.3f, new TextureRegion(walkingDown, 0, 0, 18, 22), new TextureRegion(walkingDown, 18, 0, 18, 22), 
+				new TextureRegion(walkingDown, 36, 0, 18, 22), new TextureRegion(walkingDown, 54, 0, 18, 22));
+		walkingZombieDown = loadTexture("data/character2/walking-down.png");
+		zombieAnim = new Animation(0.2f, new TextureRegion(walkingZombieDown, 0, 0, 18, 22), new TextureRegion(walkingZombieDown, 18, 0, 18, 22), 
+				new TextureRegion(walkingZombieDown, 36, 0, 18, 22), new TextureRegion(walkingZombieDown, 54, 0, 18, 22));
 		
-		bomb = new Animation(0.8f, new TextureRegion(bombs, 0, 0, 32, 32), new TextureRegion(bombs, 32, 0, 32, 32),
+		bombs = loadTexture("bomb_anim.png");
+		bomb = new Animation(0.3f, new TextureRegion(bombs, 0, 0, 32, 32), new TextureRegion(bombs, 32, 0, 32, 32),
 				new TextureRegion(bombs, 64, 0, 32, 32), new TextureRegion(bombs, 32, 0, 32, 32));
 
 		explosion = loadTexture("explosion.png");
 		explosionCenter = new TextureRegion(explosion, 4*32, 0, 32, 32);
+		explosionAnim = new Animation(0.15f, new TextureRegion(explosion, 4*32, 32, 32, 32),
+				new TextureRegion(explosion, 4*32, 32, 32, 32), new TextureRegion(explosion, 2*32, 2*32, 32, 32),
+				new TextureRegion(explosion, 2*32, 32, 32, 32), new TextureRegion(explosion, 0, 0, 32, 32),
+				new TextureRegion(explosion, 4*32, 0, 32, 32), new TextureRegion(explosion, 0, 0, 32, 32),
+				new TextureRegion(explosion, 2*32, 2*32, 32, 32));
 		
 		items = loadTexture("data/items.png");
 		mainMenu = new TextureRegion(items, 0, 224, 300, 110);
@@ -133,6 +154,7 @@ public class Assets {
 		ready = new TextureRegion(items, 320, 224, 192, 32);
 		gameOver = new TextureRegion(items, 352, 256, 160, 96);
 		highScoresRegion = new TextureRegion(Assets.items, 0, 257, 300, 110 / 3);
+		helpRegion = new TextureRegion(Assets.items, 0, 300, 300, 110 / 3);
 		logo = new TextureRegion(items, 0, 352, 274, 142);
 		soundOff = new TextureRegion(items, 0, 0, 64, 64);
 		soundOn = new TextureRegion(items, 64, 0, 64, 64);

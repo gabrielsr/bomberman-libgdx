@@ -136,7 +136,7 @@ public class GameScreen extends ScreenAdapter {
 			scoreString = "" + lastScore;
 		}
 		if (match.state == State.WORLD_STATE_NEXT_LEVEL) {
-			game.setScreen(game.winAMatchScreen);
+			game.setScreen(new WinAMatchScreen(game));
 		}
 		if (match.state == State.WORLD_STATE_GAME_OVER) {
 			state = GAME_OVER;

@@ -18,16 +18,6 @@ public class TestListMenuScreen implements Screen {
 
     public TestListMenuScreen(final GDXGame game) {
         this.game = game;
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480); 
-        
-        // Game Main Menu Building
-        stage = new Stage();
-        stage.clear();
-        Gdx.input.setInputProcessor(stage);
-        MenuButtonFactory factory = new MenuButtonFactory();
-        stage.addActor(factory.makeMenuButton(game, "Explosion", new GameScreen(game, game.TEST_STAGE_EXPLOSION)));
-        stage.addActor(factory.makeMenuButton(game, "Renderization", new GameScreen(game, game.TEST_RENDERIZATION)));
     }
     
     @Override
@@ -52,11 +42,17 @@ public class TestListMenuScreen implements Screen {
 
 	@Override
 	public void show() {
+		camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
 		stage = new Stage();
         stage.clear();
         Gdx.input.setInputProcessor(stage);
         MenuButtonFactory factory = new MenuButtonFactory();
         stage.addActor(factory.makeMenuButton(game, "Explosion", new GameScreen(game, game.TEST_STAGE_EXPLOSION)));
+        stage.addActor(factory.makeMenuButton(game, "Renderization", new GameScreen(game, game.TEST_RENDERIZATION)));
+        stage.addActor(factory.makeMenuButton(game, "Draw", new DrawScreen(game)));
+        stage.addActor(factory.makeMenuButton(game, "Win", new WinScreen(game)));
+        stage.addActor(factory.makeMenuButton(game, "Win a Match", new WinAMatchScreen(game)));
         stage.addActor(factory.makeMenuButton(game, "Back", game.mainMenuScreen));
 	}
 

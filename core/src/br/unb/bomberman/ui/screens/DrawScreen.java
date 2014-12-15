@@ -20,20 +20,6 @@ public class DrawScreen implements Screen{
     
     public DrawScreen (final GDXGame game){
     	this.game = game;
-
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
-        
-        //The background
-        background = new Texture(Gdx.files.local("draw.png"));
-        
-        // Game Main Menu Building
-        stage = new Stage();
-        stage.clear();
-        Gdx.input.setInputProcessor(stage);
-        MenuButtonFactory factory = new MenuButtonFactory();
-        stage.addActor(factory.makeMenuButton(game, "New Game", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
-        stage.addActor(factory.makeMenuButton(game, "Quit", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
     }
     
     
@@ -66,8 +52,15 @@ public class DrawScreen implements Screen{
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
+        background = new Texture(Gdx.files.local("draw.png"));
+        stage = new Stage();
+        stage.clear();
+        Gdx.input.setInputProcessor(stage);
+        MenuButtonFactory factory = new MenuButtonFactory();
+        stage.addActor(factory.makeMenuButton(game, "New Game", new GameScreen(game, game.FIRST_STAGE_LEVEL_ID)));
+        stage.addActor(factory.makeMenuButton(game, "Quit", game.mainMenuScreen));
 	}
 
 	@Override
