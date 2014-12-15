@@ -49,8 +49,8 @@ public class MainMenuScreen implements Screen {
 
 	private Stage stage;
 
-	public MainMenuScreen(final GDXGame game) {
-		this.game = game;
+	public MainMenuScreen(final GDXGame gdxGame) {
+		this.game = gdxGame;
 	}
 
 	private Animation createWalkingFrame(Texture walkSheet) {

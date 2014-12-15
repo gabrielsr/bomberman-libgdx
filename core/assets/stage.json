@@ -22,7 +22,7 @@ entities: [
 			{
 				class: br.unb.unbomber.component.CellPlacement,
 				cellX: 3,
-				cellY: 3
+				cellY: 2
 			},{
 				class: br.unb.unbomber.component.Draw,
 				type: character

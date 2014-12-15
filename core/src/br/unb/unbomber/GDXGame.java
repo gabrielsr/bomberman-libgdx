@@ -1,12 +1,7 @@
 package br.unb.unbomber;
 
 import br.unb.bomberman.ui.screens.Assets;
-import br.unb.bomberman.ui.screens.DrawScreen;
-import br.unb.bomberman.ui.screens.HighScoresScreen;
 import br.unb.bomberman.ui.screens.MainMenuScreen;
-import br.unb.bomberman.ui.screens.SettingsScreen;
-import br.unb.bomberman.ui.screens.TestListMenuScreen;
-import br.unb.bomberman.ui.screens.WinAMatchScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
