@@ -63,3 +63,4 @@ build/
 .DS_Store
 
 *.log
+/bin/

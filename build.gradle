@@ -38,19 +38,23 @@ project(":desktop") {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
         testCompile 'junit:junit:4.9'
     }
 }
 
 project(":core") {
     apply plugin: "java"
-
-
     dependencies {
+ 
         compile "br.unb.cic:bomberman:0.04"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        testCompile "junit:junit:4.9"
+        testCompile 'junit:junit:4.9'
+        
+        eclipse {
+  			project {
+    		referencedProjects 'bomberman'
+  			}
+  		}
     }
 }
 
