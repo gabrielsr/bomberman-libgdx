@@ -21,15 +21,15 @@ entities: [
 		components: [
 			{
 				class: br.unb.unbomber.component.CellPlacement,
-				cellX: 3,
-				cellY: 3
+				cellX: 2,
+				cellY: 2
 			},{
 				class: br.unb.unbomber.component.Draw,
 				type: character
 			},{
 				class: br.unb.unbomber.component.BombDropper,
 				explosionRange:5,
-				permittedSimultaneousBombs:2
+				permittedSimultaneousBombs:10
 			},{
 				class: br.unb.unbomber.component.Movable,
 				speed:0.12
@@ -58,6 +58,11 @@ entities: [
 			},{
 				class: br.unb.unbomber.component.AvailableTries,
 				lifeTries:0
+			},{
+				class: br.unb.unbomber.component.PowerUp,
+				types: [
+					BOXINGGLOVEACQUIRED
+				]
 			}
 		]
 	}
