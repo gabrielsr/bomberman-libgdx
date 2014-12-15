@@ -31,7 +31,8 @@ public class GDXGame extends Game {
     /**
      *  Load the assets and 
      */
-	@Override public void create () {
+	@Override 
+	public void create () {
         batch = new SpriteBatch();
 		
         Settings.load();

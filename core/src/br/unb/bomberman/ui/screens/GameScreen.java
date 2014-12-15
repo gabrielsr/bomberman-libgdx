@@ -39,8 +39,6 @@ public class GameScreen extends ScreenAdapter {
 	static final int GAME_OVER = 4;
 	
 	GDXGame game;
-	
-	Texture hud;
 
 	OrthographicCamera guiCam;
 	Vector3 touchPoint;
@@ -133,10 +131,9 @@ public class GameScreen extends ScreenAdapter {
 			}
 		}
 		
-		
 		if (match.score != lastScore) {
 			lastScore = match.score;
-			scoreString = "SCORE: " + lastScore;
+			scoreString = "" + lastScore;
 		}
 		if (match.state == State.WORLD_STATE_NEXT_LEVEL) {
 			game.setScreen(game.winAMatchScreen);
@@ -146,7 +143,7 @@ public class GameScreen extends ScreenAdapter {
 			if (lastScore >= Settings.highscores[4])
 				scoreString = "NEW HIGHSCORE: " + lastScore;
 			else
-				scoreString = "SCORE: " + lastScore;
+				scoreString = "" + lastScore;
 			pauseSystems();
 			Settings.addScore("Player", lastScore);
 			Settings.save();
@@ -225,12 +222,13 @@ public class GameScreen extends ScreenAdapter {
 
 	private void presentReady () {
 		game.batch.draw(Assets.ready, 160 - 192 / 2, 240 - 32 / 2, 192, 32);
+
 	}
 
 	private void presentRunning () {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		//Assets.font.draw(game.batch, scoreString, 16, 480 - 20);
+		
 		game.batch.draw(Assets.hudBar, 0, 410, 320, 60);
 		game.batch.draw(Assets.pause, 320 - 40, 480 - 64, 48, 48);
 		game.batch.draw(Assets.p1, 320 - 224, 480 - 56, 20, 24);
@@ -242,6 +240,9 @@ public class GameScreen extends ScreenAdapter {
 		game.batch.draw(Assets.p4, 320 - 86, 480 - 56, 20, 24);
 		game.batch.draw(Assets.boxScore, 320 - 60, 480 - 56, 16, 24);
 		
+		Assets.font.setScale(0.6f, 1);
+		Assets.font.draw(game.batch, scoreString, 320 - 196, 480 - 32);
+		
 		match.update();
 	}
 
@@ -249,7 +250,6 @@ public class GameScreen extends ScreenAdapter {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
-		Assets.font.draw(game.batch, scoreString, 16, 480 - 20);
 	}
 
 	private void presentLevelEnd () {
