@@ -1,0 +1,43 @@
+{
+"players": [
+	{
+		"playerName": "Player ABC",
+		"score": 12345
+	},
+	{
+		"playerName": "Player DEF",
+		"score": 67890
+	},
+	{
+		"playerName": "Player GHF",
+		"score": 54673
+	},
+	{
+		"playerName": "Bomberman",
+		"score": 9999998
+	},
+	{
+		"playerName": "Bomberwoman",
+		"score": 9999998
+	},
+	{
+		"playerName": "Peacemaker"
+	},
+	{
+		"playerName": "Bin Laden",
+		"score": 99999999
+	},
+	{
+		"playerName": "Noob",
+		"score": 10
+	},
+	{
+		"playerName": "Huehuebr",
+		"score": 69
+	},
+	{
+		"playerName": "Silva",
+		"score": 100
+	}
+]
+}

@@ -25,10 +25,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class GameScreen extends ScreenAdapter {
+	static final int GAME_NOT_SELECTED = -1;
 	static final int GAME_READY = 0;
 	static final int GAME_RUNNING = 1;
 	static final int GAME_PAUSED = 2;
@@ -50,11 +53,22 @@ public class GameScreen extends ScreenAdapter {
 	BomberMatchWithUi match;
 	
 	private int state;
+	private final String stageId;
 
 	public GameScreen (GDXGame game, String stageId) {
 		this.game = game;
+		this.stageId = stageId;
+		state = GAME_NOT_SELECTED;
+	}
+	
+	@Override
+	public void show(){
+		loadGame();
+		match.start();
+	}
 
-		state = GAME_READY;
+	private void loadGame() {
+		
 		guiCam = new OrthographicCamera(320, 480);
 		guiCam.position.set(320 / 2, 480 / 2, 0);
 		touchPoint = new Vector3();
@@ -66,15 +80,17 @@ public class GameScreen extends ScreenAdapter {
 		quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
 
 		lastScore = 0;
-		scoreString = "SCORE: 0";
+		scoreString = "0";
+		
+		state = GAME_READY;
 		
 		pauseSystems();
+
+		
 	}
 
 	public void update (float deltaTime) {
 		if (deltaTime > 0.1f) deltaTime = 0.1f;
-
-		match.update();
 		
 		switch (state) {
 		case GAME_READY:
@@ -115,22 +131,21 @@ public class GameScreen extends ScreenAdapter {
 			}
 		}
 		
-		
 		if (match.score != lastScore) {
 			lastScore = match.score;
-			scoreString = "SCORE: " + lastScore;
+			scoreString = "" + lastScore;
 		}
 		if (match.state == State.WORLD_STATE_NEXT_LEVEL) {
-			game.setScreen(new WinScreen(game));
+			game.setScreen(new WinAMatchScreen(game));
 		}
 		if (match.state == State.WORLD_STATE_GAME_OVER) {
 			state = GAME_OVER;
 			if (lastScore >= Settings.highscores[4])
 				scoreString = "NEW HIGHSCORE: " + lastScore;
 			else
-				scoreString = "SCORE: " + lastScore;
+				scoreString = "" + lastScore;
 			pauseSystems();
-			Settings.addScore(lastScore);
+			Settings.addScore("Player", lastScore);
 			Settings.save();
 		}
 	}
@@ -156,7 +171,7 @@ public class GameScreen extends ScreenAdapter {
 				Assets.music.setVolume(Settings.soundVolume);
 				state = GAME_READY;
 				game.getScreen().dispose();
-				game.setScreen(new MainMenuScreen(game));
+				game.setScreen(game.mainMenuScreen);
 				return;
 			}
 		}
@@ -177,7 +192,7 @@ public class GameScreen extends ScreenAdapter {
 
 	private void updateGameOver () {
 		if (Gdx.input.justTouched()) {
-			game.setScreen(new MainMenuScreen(game));
+			game.setScreen(game.mainMenuScreen);
 		}
 	}
 
@@ -207,20 +222,34 @@ public class GameScreen extends ScreenAdapter {
 
 	private void presentReady () {
 		game.batch.draw(Assets.ready, 160 - 192 / 2, 240 - 32 / 2, 192, 32);
+
 	}
 
 	private void presentRunning () {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		game.batch.draw(Assets.pause, 320 - 64, 480 - 64, 64, 64);
-		Assets.font.draw(game.batch, scoreString, 16, 480 - 20);
+		
+		game.batch.draw(Assets.hudBar, 0, 410, 320, 60);
+		game.batch.draw(Assets.pause, 320 - 40, 480 - 64, 48, 48);
+		game.batch.draw(Assets.p1, 320 - 224, 480 - 56, 20, 24);
+		game.batch.draw(Assets.boxScore, 320 - 200, 480 - 56, 16, 24);
+		game.batch.draw(Assets.p2, 320 - 178, 480 - 56, 20, 24);
+		game.batch.draw(Assets.boxScore, 320 - 154, 480 - 56, 16, 24);
+		game.batch.draw(Assets.p3, 320 - 132, 480 - 56, 20, 24);
+		game.batch.draw(Assets.boxScore, 320 - 108, 480 - 56, 16, 24);
+		game.batch.draw(Assets.p4, 320 - 86, 480 - 56, 20, 24);
+		game.batch.draw(Assets.boxScore, 320 - 60, 480 - 56, 16, 24);
+		
+		Assets.font.setScale(0.6f, 1);
+		Assets.font.draw(game.batch, scoreString, 320 - 196, 480 - 32);
+		
+		match.update();
 	}
 
 	private void presentPaused () {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
-		Assets.font.draw(game.batch, scoreString, 16, 480 - 20);
 	}
 
 	private void presentLevelEnd () {

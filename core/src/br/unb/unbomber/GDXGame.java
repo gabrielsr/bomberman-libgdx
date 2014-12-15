@@ -1,8 +1,12 @@
 package br.unb.unbomber;
 
 import br.unb.bomberman.ui.screens.Assets;
-import br.unb.bomberman.ui.screens.GameScreen;
+import br.unb.bomberman.ui.screens.DrawScreen;
+import br.unb.bomberman.ui.screens.HighScoresScreen;
 import br.unb.bomberman.ui.screens.MainMenuScreen;
+import br.unb.bomberman.ui.screens.SettingsScreen;
+import br.unb.bomberman.ui.screens.TestListMenuScreen;
+import br.unb.bomberman.ui.screens.WinAMatchScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,29 +14,24 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GDXGame extends Game {
     
     public final String FIRST_STAGE_LEVEL_ID = "stage";
-
-	
+    public final String TEST_STAGE_EXPLOSION = "test/explosion";
+    public final String TEST_RENDERIZATION = "test/renderization";
 	public SpriteBatch batch;
+	
+	public MainMenuScreen mainMenuScreen; 
 	
     /**
      *  Load the assets and 
      */
-	@Override public void create () {
+	@Override 
+	public void create () {
         batch = new SpriteBatch();
 		
         Settings.load();
 		Assets.load();                
-        
-		//set main menu
-		this.setScreen(new MainMenuScreen(this));
-	}
-	
-	/**
-	 * 
-	 */
-	public void play(){
-		//line bellow commentted because it results in bug on screen update  
-		//this.setScreen(new GameScreen(this, FIRST_STAGE_LEVEL_ID));
+		
+		mainMenuScreen = new MainMenuScreen(this);
+		this.setScreen(mainMenuScreen);
 	}
 
     public void render() {
