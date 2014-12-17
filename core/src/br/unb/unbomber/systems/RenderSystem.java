@@ -187,7 +187,7 @@ public class RenderSystem extends BaseSystem {
 			Transform gameTranformation, float width, float height, Movable movable){
 
 		/** Transformations for the movement inside a cell */
-		gridRef = gridRef.add(movable.getCellDisplacement());
+		gridRef = gridRef.add(movable.getCellPosition());
 				
 		return gridPositionToScreenPosition(gridRef, 
 				gameTranformation, width,height );

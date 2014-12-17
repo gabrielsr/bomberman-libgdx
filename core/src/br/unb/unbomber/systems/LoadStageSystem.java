@@ -1,9 +1,8 @@
 package br.unb.unbomber.systems;
 
-import br.unb.unbomber.component.CellPlacement;
-import br.unb.unbomber.component.Draw;
-import br.unb.unbomber.component.ExplosionBarrier;
+import br.unb.unbomber.component.EntityBuilder;
 import br.unb.unbomber.component.ExplosionBarrier.ExplosionBarrierType;
+import br.unb.unbomber.component.MovementBarrier.MovementBarrierType;
 import br.unb.unbomber.core.BaseSystem;
 import br.unb.unbomber.core.Entity;
 import br.unb.unbomber.core.EntityManager;
@@ -62,21 +61,12 @@ public class LoadStageSystem extends BaseSystem {
 		}
 	}
 	
-	public void addBlock(int x, int y, ExplosionBarrierType explosionBarrierType, String drawType){
-		Entity block = getEntityManager().createEntity();
-		
-		CellPlacement cell = new CellPlacement();
-		
-		cell.setCellX(x);
-		cell.setCellY(y);
-		
-		ExplosionBarrier explosionBarrier = new ExplosionBarrier();
-		explosionBarrier.setType(explosionBarrierType);
-	
-		block.addComponent(new Draw(drawType));
-		block.addComponent(cell);
-		block.addComponent(explosionBarrier);
-		getEntityManager().update(block);
+	public void addBlock(int x, int y,
+			ExplosionBarrierType Type, String drawType) {
+		EntityBuilder.create(getEntityManager())
+				.withMovementBarrier(MovementBarrierType.BLOCKER)
+				.withExplosionBarrier(Type).withPosition(x, y)
+				.withDraw(drawType).build();
 	}
 
 	@SuppressWarnings("deprecation")
