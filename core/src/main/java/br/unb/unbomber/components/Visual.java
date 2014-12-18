@@ -1,4 +1,4 @@
-package br.un.unbomber.components;
+package br.unb.unbomber.components;
 
 import br.unb.unbomber.core.Component;
 

@@ -1,4 +1,4 @@
-package br.un.unbomber.components;
+package br.unb.unbomber.components;
 
 /**
  * Image transformation to be applied to a TextureRegion

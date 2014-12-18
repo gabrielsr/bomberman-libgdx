@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import br.un.unbomber.components.Transform;
-import br.un.unbomber.components.Visual;
 import br.unb.bomberman.ui.screens.ScreenDimensions;
 import br.unb.unbomber.component.CellPlacement;
 import br.unb.unbomber.component.Draw;
 import br.unb.unbomber.component.Movable;
+import br.unb.unbomber.components.Transform;
+import br.unb.unbomber.components.Visual;
 import br.unb.unbomber.core.BaseSystem;
 import br.unb.unbomber.core.Component;
 import br.unb.unbomber.core.Entity;
@@ -100,14 +100,18 @@ public class RenderSystem extends BaseSystem {
 			float height = vis.getRegion().getRegionHeight();
 			
 			Movable movable = (Movable) getEntityManager().getComponent(Movable.class, vis.getEntityId());
+
+			screenPosition = gridPositionToScreenPosition(cellPlacement.centerPosition());
 			
-			if(movable==null){
-				
-				screenPosition = gridPositionToScreenPosition(cellPlacement.centerPosition(), 
-						vis.getTransform(), width,height );
-			}else{
-				screenPosition = gridPositionToScreenPosition(cellPlacement.centerPosition(), 
-						vis.getTransform(), width,height, movable);
+			Vector2D<Float> repositeTheCenter = new Vector2D<Float>(-0.5f * width, +0.5f *  height);	
+			screenPosition.add(repositeTheCenter);
+			
+			/** Transformations for the game */
+			Vector2D<Float> gameTransSum = new Vector2D<Float>(vis.getTransform().dx, vis.getTransform().dy);
+			screenPosition.add(gameTransSum);
+
+			if(movable!=null){
+				screenPosition.add(movable.getCellPosition().sub(cellPlacement.centerPosition()));
 			}
 			
 			Transform t = vis.getTransform();
@@ -158,38 +162,17 @@ public class RenderSystem extends BaseSystem {
 	 * @param cellPlacement
 	 * @return
 	 */
-	public Vector2D<Float>  gridPositionToScreenPosition(Vector2D<Float> gridRef, 
-			Transform gameTranformation, float width, float height ){		
+	public Vector2D<Float>  gridPositionToScreenPosition(Vector2D<Float> gridRef ){		
 		//(0,-1) - invert y axe
 		Vector2D<Float> orient = new Vector2D<Float>(1.0f, -1.0f);
-
-		Vector2D<Float> bringToTheBorder = new Vector2D<Float>(0.0f, -0.5f*screenDimensions.getCellSize());
 		
 		Vector2D<Float> moveUp = new Vector2D<Float>(0.0f, (float)(screenDimensions.getScreenHeight() - screenDimensions.getHudHeight()) );
 		
 		float scale = screenDimensions.getCellSize();
 		
-		
-		Vector2D<Float> repositeTheCenter = new Vector2D<Float>(-0.5f * width, -0.5f *  height);
-		
-		/** Transformations for the game */
-		Vector2D<Float> gameTransSum = new Vector2D<Float>(gameTranformation.dx, gameTranformation.dy);
-
 		return gridRef.mult(orient)//.add(bringToTheBorder)
 				.mult(scale)
-				.add(moveUp)//.add(transformC)
-				.add(gameTransSum)
-				.add(repositeTheCenter);
+				.add(moveUp);
 
-	}
-
-	public Vector2D<Float>  gridPositionToScreenPosition(Vector2D<Float> gridRef, 
-			Transform gameTranformation, float width, float height, Movable movable){
-
-		/** Transformations for the movement inside a cell */
-		gridRef = gridRef.add(movable.getCellPosition());
-				
-		return gridPositionToScreenPosition(gridRef, 
-				gameTranformation, width,height );
 	}
 }

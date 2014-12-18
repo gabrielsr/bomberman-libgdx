@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.un.unbomber.components.SequenceAnimation;
-import br.un.unbomber.components.Transform;
-import br.un.unbomber.components.Visual;
 import br.unb.bomberman.ui.screens.Assets;
 import br.unb.unbomber.GameMatch;
 import br.unb.unbomber.component.Draw;
+import br.unb.unbomber.components.Transform;
+import br.unb.unbomber.components.Visual;
 import br.unb.unbomber.core.Component;
 import br.unb.unbomber.core.EntityManager;
 

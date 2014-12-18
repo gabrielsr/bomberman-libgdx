@@ -1,4 +1,4 @@
-package br.un.unbomber.components;
+package br.unb.unbomber.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
