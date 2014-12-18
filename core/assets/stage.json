@@ -19,8 +19,8 @@ entities: [
 		components: [
 			{
 				class: br.unb.unbomber.component.CellPlacement,
-				cellX: 3,
-				cellY: 2
+				cellX: 2,
+				cellY: 1
 			},{
 				class: br.unb.unbomber.component.Draw,
 				type: character
