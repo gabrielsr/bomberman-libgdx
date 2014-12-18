@@ -3,6 +3,7 @@ package br.unb.unbomber.systems;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
 
 import br.unb.bomberman.ui.screens.ScreenDimensions;
 import br.unb.unbomber.component.CellPlacement;
@@ -31,13 +32,12 @@ public class RenderSystem extends BaseSystem {
 
 	SpriteBatch batch;
 	
-	private ScreenDimensions screenDimensions;
+	private ScreenDimensions screenDimensions = new ScreenDimensions();
 	
 	
 	
 	public RenderSystem(EntityManager entityManager) {
 		super(entityManager);
-		screenDimensions = new ScreenDimensions();
 	}
 
 	public RenderSystem(EntityManager entityManager,
@@ -90,7 +90,7 @@ public class RenderSystem extends BaseSystem {
 			CellPlacement cellPlacement = (CellPlacement) getEntityManager().getComponent(CellPlacement.class, vis.getEntityId());
 			if(cellPlacement==null){
 				Draw draw = (Draw) getEntityManager().getComponent(Draw.class,  vis.getEntityId());
-				//LOGGER.log(Level.SEVERE, "trying to draw a "+ draw.getType() +"\n But it has not a placement");
+				LOGGER.log(Level.SEVERE, "trying to draw a "+ draw.getType() +"\n But it has not a placement");
 				continue;
 			}
 			
@@ -101,18 +101,22 @@ public class RenderSystem extends BaseSystem {
 			
 			Movable movable = (Movable) getEntityManager().getComponent(Movable.class, vis.getEntityId());
 
-			screenPosition = gridPositionToScreenPosition(cellPlacement.centerPosition());
+			Vector2D<Float> gridPosition = cellPlacement.centerPosition();
 			
-			Vector2D<Float> repositeTheCenter = new Vector2D<Float>(-0.5f * width, +0.5f *  height);	
-			screenPosition.add(repositeTheCenter);
+			if(movable!=null){
+				gridPosition = gridPosition.add(movable.getCellPosition().sub(new Vector2D<Float>(0.5f, 0.5f)));
+			}
+			/** screen position */
+			screenPosition = gridPositionToScreenPosition(gridPosition);
+			
+			Vector2D<Float> repositeTheCenter = new Vector2D<Float>(-0.5f * width, -0.5f *  height);	
+			screenPosition = screenPosition.add(repositeTheCenter);
 			
 			/** Transformations for the game */
 			Vector2D<Float> gameTransSum = new Vector2D<Float>(vis.getTransform().dx, vis.getTransform().dy);
-			screenPosition.add(gameTransSum);
+			screenPosition = screenPosition.add(gameTransSum);
 
-			if(movable!=null){
-				screenPosition.add(movable.getCellPosition().sub(cellPlacement.centerPosition()));
-			}
+	
 			
 			Transform t = vis.getTransform();
 			
