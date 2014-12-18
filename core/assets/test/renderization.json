@@ -1,18 +1,26 @@
 {
 name: "Stage Teste",
 mapRepresentation: 
-"
+"#
 
 
-   #
-",
+
+
+
+
+
+
+
+
+
+                   #",
 entities: [
 	{
 		components: [
 			{
 				class: br.unb.unbomber.component.CellPlacement,
-				cellX: 3,
-				cellY: 3
+				cellX: 0,
+				cellY: 0
 			},{
 				class: br.unb.unbomber.component.Draw,
 				type: character

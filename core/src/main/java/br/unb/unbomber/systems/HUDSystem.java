@@ -1,30 +1,18 @@
 package br.unb.unbomber.systems;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import org.junit.Before;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import br.unb.bomberman.ui.screens.Assets;
-
-import br.unb.unbomber.GDXGame;
-
-import br.unb.unbomber.core.BaseSystem;
-import br.unb.unbomber.core.EntityManager;
-import br.unb.unbomber.core.Component;
-import br.unb.unbomber.core.Entity;
-import br.unb.unbomber.core.Event;
-
 import br.unb.unbomber.component.Timer;
-
-import br.unb.unbomber.event.DestroyedEvent;
+import br.unb.unbomber.core.BaseSystem;
+import br.unb.unbomber.core.Entity;
+import br.unb.unbomber.core.EntityManager;
+import br.unb.unbomber.core.Event;
 import br.unb.unbomber.event.GameOverEvent;
 import br.unb.unbomber.event.TimeOverEvent;
 
-import br.unb.unbomber.systems.TimeSystem;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * Control the system of the status bar.
