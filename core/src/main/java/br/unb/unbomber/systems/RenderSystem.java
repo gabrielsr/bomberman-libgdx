@@ -37,6 +37,7 @@ public class RenderSystem extends BaseSystem {
 	
 	public RenderSystem(EntityManager entityManager) {
 		super(entityManager);
+		screenDimensions = new ScreenDimensions();
 	}
 
 	public RenderSystem(EntityManager entityManager,
@@ -62,7 +63,6 @@ public class RenderSystem extends BaseSystem {
 
 	@Override
 	public void start() {
-		screenDimensions = new ScreenDimensions();
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, screenDimensions.getScreenWidth(), screenDimensions.getScreenHeight());
 	}
