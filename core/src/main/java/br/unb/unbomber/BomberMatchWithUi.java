@@ -1,7 +1,9 @@
 package br.unb.unbomber;
 
 import br.unb.unbomber.match.TargetFrameRateMatch;
+import br.unb.unbomber.systems.AudioSystem;
 import br.unb.unbomber.systems.GridSystem;
+import br.unb.unbomber.systems.HUDSystem;
 import br.unb.unbomber.systems.LoadStageSystem;
 import br.unb.unbomber.systems.LoadTextureSystem;
 import br.unb.unbomber.systems.PlayerControlSystem;
@@ -42,10 +44,10 @@ public class BomberMatchWithUi extends TargetFrameRateMatch{
 		super.addSystem(new GridSystem());
 		super.addSystem(new LoadStageSystem(stageId));
 		super.addSystem(new PlayerControlSystem());
-		//super.addSystem(new AudioSystem());
+		super.addSystem(new AudioSystem());
 		super.addSystem(new LoadTextureSystem(stageId));
 		super.addSystem(new RenderSystem(batch));
-		//super.addSystem(new HUDSystem(batch));
+		super.addSystem(new HUDSystem(batch));
 		
 		super.start();
 	}

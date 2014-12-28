@@ -1,6 +1,6 @@
 package br.unb.unbomber.core.event;
 
-import br.unb.unbomber.core.Event;
+import net.mostlyoriginal.api.event.common.Event;
 
 
 /**
@@ -9,7 +9,7 @@ import br.unb.unbomber.core.Event;
  * @author grodrigues
  *
  */
-public class ChangeAudioThemeEvent extends Event{
+public class ChangeAudioThemeEvent implements Event{
 
 	private String newThemeName;
 

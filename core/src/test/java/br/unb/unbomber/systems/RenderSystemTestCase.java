@@ -1,14 +1,16 @@
 package br.unb.unbomber.systems;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import net.mostlyoriginal.api.event.common.EventManager;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import br.unb.bomberman.ui.screens.ScreenDimensions;
-import br.unb.unbomber.core.EntityManager;
-import br.unb.unbomber.core.EntityManagerImpl;
-import br.unb.unbomber.gridphysics.Vector2D;
+import br.unb.gridphysics.Vector2D;
+
+import com.artemis.EntityManager;
+import com.artemis.World;
 
 public class RenderSystemTestCase {
 
@@ -18,17 +20,24 @@ public class RenderSystemTestCase {
 	RenderSystem renderSystem;
 	
 	ScreenDimensions screenDimensions;
-
+	
+	World world;
+	
 	@Before
 	public void setUp() throws Exception {
 
-		/** Inicia um sistema para cada caso de teste. */
-		EntityManagerImpl.init();
-		entityManager = EntityManagerImpl.getInstance();
-		renderSystem = new RenderSystem(entityManager);
+		renderSystem = new RenderSystem(null);
+		
+		world = new World();
+		world.setSystem(renderSystem);
+		
+		world.setManager(new EventManager());
 		
 		screenDimensions = new ScreenDimensions();
+		
+		world.initialize();
 	}
+
 
 	@Test
 	public void testGridPositionToScreenPosition() {

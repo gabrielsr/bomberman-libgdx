@@ -1,12 +1,9 @@
 package br.unb.unbomber.systems;
 
-import java.util.List;
-
-import br.unb.unbomber.core.BaseSystem;
-import br.unb.unbomber.core.EntityManager;
-import br.unb.unbomber.core.Event;
+import net.mostlyoriginal.api.event.common.Subscribe;
 import br.unb.unbomber.core.event.ChangeAudioThemeEvent;
 
+import com.artemis.systems.VoidEntitySystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
@@ -19,42 +16,36 @@ import com.badlogic.gdx.audio.Music;
  * @author grodrigues
  *
  */
-public class AudioSystem extends BaseSystem {
+public class AudioSystem extends VoidEntitySystem {
 
 	public static final String AUDIO_BASE = "audio/music/";
 	public static final String OPEN_THEME = AUDIO_BASE + "DST-1990.mp3";
 	
 	public Music openTheme;
-	
-	public AudioSystem(EntityManager entityManager) {
-		super(entityManager);
-	}
 
+	
+	
 	@Override
-	public void start() {
+	public void begin() {
 		load();
 	}
 
 	@Override
-	public void stop() {
+	public void end() {
 		openTheme.pause();
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void update() {
-		List<Event> destroyedEvents = getEntityManager().getEvents(
-				ChangeAudioThemeEvent.class);
-
-		if (destroyedEvents != null) {
-			for (Event event : destroyedEvents) {
-				ChangeAudioThemeEvent changeAudio = (ChangeAudioThemeEvent) event;
-				//TODO change the audio loaded like the music.
-			}
-		}
+	public void processSystem() {
+	
 
 	}
-	
+
+	@Subscribe
+	public void handle(ChangeAudioThemeEvent event){
+		
+	}
 	private void load(){
 		openTheme = Gdx.audio.newMusic(Gdx.files.internal(OPEN_THEME));
 	}
