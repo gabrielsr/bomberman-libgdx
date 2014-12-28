@@ -4,6 +4,7 @@ import net.mostlyoriginal.api.event.common.Event;
 import net.mostlyoriginal.api.event.common.EventManager;
 import br.unb.unbomber.component.ExplosionBarrier.ExplosionBarrierType;
 import br.unb.unbomber.component.MovementBarrier.MovementBarrierType;
+import br.unb.unbomber.match.EntitySpec;
 import br.unb.unbomber.match.StageSpec;
 import br.unb.unbomber.misc.EntityBuilder2;
 
@@ -76,9 +77,11 @@ public class LoadStageSystem extends VoidEntitySystem {
 			this.stage = json.fromJson(StageSpec.class, stageFile.reader());
 			buildStageBlocks(this.stage.getMapRepresentation());
 
-			// for (Entity entity : stage.getEntities()) {
-			// world.addEntity(entity);
-			// }
+			 for (EntitySpec entity : stage.getEntities()) {
+				EntityBuilder2.create(world)
+				.with(entity.components)
+				.build();
+			 }
 		}
 
 	}

@@ -1,67 +1,60 @@
 package br.unb.unbomber.systems;
 
-import java.util.List;
-
-import br.unb.unbomber.component.BombDropper;
-import br.unb.unbomber.component.Movable;
-import br.unb.unbomber.core.BaseSystem;
-import br.unb.unbomber.core.Component;
-import br.unb.unbomber.core.EntityManager;
+import net.mostlyoriginal.api.event.common.EventManager;
+import br.unb.unbomber.component.Control;
+import br.unb.unbomber.component.ControlPair;
+import br.unb.unbomber.component.Direction;
 import br.unb.unbomber.event.ActionCommandEvent;
 import br.unb.unbomber.event.ActionCommandEvent.ActionType;
 import br.unb.unbomber.event.MovementCommandEvent;
-import br.unb.unbomber.event.MovementCommandEvent.MovementType;
 
+import com.artemis.Aspect;
+import com.artemis.ComponentMapper;
+import com.artemis.Entity;
+import com.artemis.EntitySystem;
+import com.artemis.annotations.Wire;
+import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 
-public class PlayerControlSystem extends BaseSystem {
+@Wire
+public class PlayerControlSystem extends EntitySystem {
 
-
-	public PlayerControlSystem(EntityManager entityManager) {
-		super(entityManager);
+	/** used to dispatch events */
+	private EventManager em;
+	
+	ComponentMapper<Control> cmControl;
+	
+	public PlayerControlSystem(){
+		super(Aspect.getAspectForAll(Control.class));
 	}
 
 	@Override
-	public void update() {
-		MovementType direction = null;
+	public void processEntities(ImmutableBag<Entity> entities){
+		
+		for(Entity entity: entities){
+			checkControls(entity);
+		}
+	}
+	
+	public void checkControls(Entity entity){
 
-		if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
-			direction = MovementType.MOVE_LEFT;
-		}
-		if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			direction = MovementType.MOVE_RIGHT;
-		}
-		if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) {
-			direction = MovementType.MOVE_DOWN;
-		}
-		if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
-			direction = MovementType.MOVE_UP;
-		}
+		Control control = cmControl.get(entity);
 		
-		if(direction!=null){
-			List<Component> movables = getEntityManager().getComponents(Movable.class);
-			for(Component movable: movables){
-				getEntityManager().addEvent(
-						(new MovementCommandEvent(direction,movable.getEntityId())));
-			}
-
-		}
-		
-		ActionType action = null;
-		
-		if (Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isKeyPressed(Keys.J)) {
-			action = ActionType.DROP_BOMB;
-		}
-		if (Gdx.input.isKeyPressed(Keys.ENTER) || Gdx.input.isKeyPressed(Keys.K)) {
-			action = ActionType.EXPLODE_REMOTE_BOMB;
-		}
-		
-		if(action!=null){
-			List<Component> droppers = getEntityManager().getComponents(BombDropper.class);
-			for(Component dropper: droppers){
-				getEntityManager().addEvent(
-						(new ActionCommandEvent(action,dropper.getEntityId())));				
+		for(ControlPair actionControl: control.getActions()){
+			if(Gdx.input.isKeyPressed(actionControl.getKey())){
+				switch (actionControl.getCommand().type) {
+				case ACTION:
+					em.dispatch(
+							new ActionCommandEvent(
+									(ActionType) actionControl.getCommand().command, entity ));
+					
+					break;
+				case MOVEMENT:
+					em.dispatch(
+							new MovementCommandEvent(
+									(Direction) actionControl.getCommand().command, entity ));
+					break;
+				}
 			}
 		}
 	}

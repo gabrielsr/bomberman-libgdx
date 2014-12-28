@@ -18,7 +18,7 @@ entities: [
 	{
 		components: [
 			{
-				class: br.unb.unbomber.component.CellPlacement,
+				class: br.unb.unbomber.component.Position,
 				cellX: 0,
 				cellY: 0
 			},{
@@ -42,15 +42,36 @@ entities: [
 				canTakeDamaged: true,
 			},{
 				class: br.unb.unbomber.component.Control,
-				movement:[
+				actions:[
 					{
 						class: br.unb.unbomber.component.ControlPair,
-						key:64,
-						command:MOVE_LEFT
+						key:21,
+						command:COMMAND_LEFT
 					},	{
 						class: br.unb.unbomber.component.ControlPair,
+						key:22,
+						command:COMMAND_RIGHT
+					},
+					{
+						class: br.unb.unbomber.component.ControlPair,
+						key:19,
+						command:COMMAND_UP
+					},	{
+						class: br.unb.unbomber.component.ControlPair,
+						key:20,
+						command:COMMAND_DOWN
+					},{
+						class: br.unb.unbomber.component.ControlPair,
+						key:62,
+						command:COMMAND_DROP
+					},{
+						class: br.unb.unbomber.component.ControlPair,
 						key:66,
-						command:MOVE_RIGHT
+						command:COMMAND_REMOTE
+					},{
+						class: br.unb.unbomber.component.ControlPair,
+						key:66,
+						command:COMMAND_REMOTE2
 					}
 				]
 			},{

@@ -4,6 +4,7 @@ import br.unb.unbomber.match.TargetFrameRateMatch;
 import br.unb.unbomber.systems.GridSystem;
 import br.unb.unbomber.systems.LoadStageSystem;
 import br.unb.unbomber.systems.LoadTextureSystem;
+import br.unb.unbomber.systems.PlayerControlSystem;
 import br.unb.unbomber.systems.RenderSystem;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -40,7 +41,7 @@ public class BomberMatchWithUi extends TargetFrameRateMatch{
 	public void start(){
 		super.addSystem(new GridSystem());
 		super.addSystem(new LoadStageSystem(stageId));
-		//super.addSystem(new PlayerControlSystem());
+		super.addSystem(new PlayerControlSystem());
 		//super.addSystem(new AudioSystem());
 		super.addSystem(new LoadTextureSystem(stageId));
 		super.addSystem(new RenderSystem(batch));
