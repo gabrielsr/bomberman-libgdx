@@ -57,7 +57,7 @@ public class RenderSystem extends EntitySystem {
 			//TODO improve with x and type comparison
 			@Override
 			public int compare(Entity entityA, Entity entityB) {
-				return (int)Math.signum(getY(entityB) - getY(entityA));
+				return (int)Math.signum( getY(entityA) - getY(entityB));
 			}
 
 			private int getY(Entity entityA) {
@@ -94,7 +94,6 @@ public class RenderSystem extends EntitySystem {
 			
 			Position position = cmPosition.get(entity);
 			Visual visual = cmVisual.get(entity);
-			Movable movable = cmMovable.get(entity);
 			
 			Vector2D<Float> screenPosition;
 
@@ -103,9 +102,6 @@ public class RenderSystem extends EntitySystem {
 
 			Vector2D<Float> gridPosition = position.centerPosition();
 			
-			if(movable!=null){
-				gridPosition = gridPosition.add(movable.getCellPosition().sub(new Vector2D<Float>(0.5f, 0.5f)));
-			}
 			/** screen position */
 			screenPosition = gridPositionToScreenPosition(gridPosition);
 			
