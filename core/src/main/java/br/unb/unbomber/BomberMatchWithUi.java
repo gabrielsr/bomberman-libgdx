@@ -1,10 +1,9 @@
 package br.unb.unbomber;
 
-import br.unb.unbomber.core.EntityManager;
-import br.unb.unbomber.systems.AudioSystem;
-import br.unb.unbomber.systems.HUDSystem;
+import br.unb.unbomber.match.TargetFrameRateMatch;
+import br.unb.unbomber.systems.GridSystem;
 import br.unb.unbomber.systems.LoadStageSystem;
-import br.unb.unbomber.systems.PlayerControlSystem;
+import br.unb.unbomber.systems.LoadTextureSystem;
 import br.unb.unbomber.systems.RenderSystem;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -39,20 +38,15 @@ public class BomberMatchWithUi extends TargetFrameRateMatch{
 	}
 
 	public void start(){
-		/* create the UI systems */
-		EntityManager em = this.getEntityManager();
-		
-		super.addSystem(new LoadStageSystem(em, stageId));
-		super.addSystem(new PlayerControlSystem(em));
-		super.addSystem(new AudioSystem(em));
-		super.addSystem(new RenderSystem(em, batch));
-		super.addSystem(new HUDSystem(em, batch));
+		super.addSystem(new GridSystem());
+		super.addSystem(new LoadStageSystem(stageId));
+		//super.addSystem(new PlayerControlSystem());
+		//super.addSystem(new AudioSystem());
+		super.addSystem(new LoadTextureSystem(stageId));
+		super.addSystem(new RenderSystem(batch));
+		//super.addSystem(new HUDSystem(batch));
 		
 		super.start();
-	}
-
-	public void update(){
-		super.update();
 	}
 
 	public void removeAllEntities() {

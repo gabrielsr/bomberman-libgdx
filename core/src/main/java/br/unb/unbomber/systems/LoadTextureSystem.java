@@ -1,27 +1,48 @@
-package br.unb.unbomber.ui.skin;
+package br.unb.unbomber.systems;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.unb.bomberman.ui.screens.Assets;
 import br.unb.unbomber.component.Draw;
+import br.unb.unbomber.component.Position;
 import br.unb.unbomber.components.Transform;
 import br.unb.unbomber.components.Visual;
 import br.unb.unbomber.match.GameMatch;
+import br.unb.unbomber.ui.skin.LoadTexture;
 
+import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
+import com.artemis.EntitySystem;
 import com.artemis.annotations.Wire;
+import com.artemis.utils.ImmutableBag;
 
 @Wire
-public class LoadTexture {
-	
-	private final static Logger LOGGER = Logger.getLogger(GameMatch.class.getName()); 
-	
-	
+public class LoadTextureSystem extends EntitySystem {
+
 	ComponentMapper<Draw> cmDraw;
 
 	ComponentMapper<Visual> cmVisual;
+	
+	private String visualTheme;
+
+	private final static Logger LOGGER = Logger.getLogger(GameMatch.class.getName());
+	
+	public LoadTextureSystem(String visualTheme) {
+		super(Aspect.getAspectForAll(Draw.class, Position.class));
+		
+		this.visualTheme = visualTheme;
+	}
+
+	@Override
+	protected void processEntities(ImmutableBag<Entity> entities) {
+		for (Entity entity : entities) {
+			load(entity, visualTheme);
+		}
+	}
+	
+
 
 	public void load(Entity entity, String visualTheme){
 			Draw drawable = cmDraw.get(entity);

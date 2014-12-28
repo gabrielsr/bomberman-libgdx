@@ -1,7 +1,6 @@
 package br.unb.unbomber.components;
 
-import br.unb.unbomber.core.Component;
-
+import com.artemis.Component;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 

@@ -3,105 +3,105 @@ package br.unb.unbomber.systems;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.logging.Level;
+
+import org.apache.log4j.Logger;
 
 import br.unb.bomberman.ui.screens.ScreenDimensions;
-import br.unb.unbomber.component.CellPlacement;
+import br.unb.gridphysics.Vector2D;
 import br.unb.unbomber.component.Draw;
 import br.unb.unbomber.component.Movable;
+import br.unb.unbomber.component.Position;
 import br.unb.unbomber.components.Transform;
 import br.unb.unbomber.components.Visual;
-import br.unb.unbomber.core.BaseSystem;
-import br.unb.unbomber.core.Component;
-import br.unb.unbomber.core.Entity;
-import br.unb.unbomber.core.EntityManager;
-import br.unb.unbomber.gridphysics.Vector2D;
-import br.unb.unbomber.ui.skin.LoadTexture;
 
+import com.artemis.Aspect;
+import com.artemis.ComponentMapper;
+import com.artemis.Entity;
+import com.artemis.EntitySystem;
+import com.artemis.annotations.Wire;
+import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
-public class RenderSystem extends BaseSystem {
+@Wire
+public class RenderSystem extends EntitySystem {
 
 	
 	private OrthographicCamera cam;
 	private Array<Entity> renderQueue;
 	private Comparator<Entity> comparator;
 
+	ComponentMapper<Draw> cmDraw;
+	
+	ComponentMapper<Position> cmPosition;
+
+	ComponentMapper<Visual> cmVisual;
+	
+	ComponentMapper<Movable>  cmMovable;
+	
+	protected Logger LOGGER = Logger.getLogger("br.unb.unbomber.systems");
+
 	SpriteBatch batch;
 	
 	private ScreenDimensions screenDimensions = new ScreenDimensions();
-	
-	
-	
-	public RenderSystem(EntityManager entityManager) {
-		super(entityManager);
-	}
 
-	public RenderSystem(EntityManager entityManager,
-			SpriteBatch batch) {
-		super(entityManager);
-		this.batch = batch;
+	
+	
+	
+	public RenderSystem(SpriteBatch batch) {
+		super(Aspect.getAspectForAll(Position.class, Visual.class));
 		
 		comparator = new Comparator<Entity>() {
+			//TODO improve with x and type comparison
 			@Override
 			public int compare(Entity entityA, Entity entityB) {
 				return (int)Math.signum(getY(entityB) - getY(entityA));
 			}
 
 			private int getY(Entity entityA) {
-				CellPlacement placement = (CellPlacement)getEntityManager().getComponent(CellPlacement.class, entityA.getEntityId());
+				Position placement = cmPosition.get(entityA);
 				return placement.getCellY();
 			}
 		};
 		
 		this.batch = batch;
-
 	}
 
 	@Override
-	public void start() {
+	public void begin() {
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, screenDimensions.getScreenWidth(), screenDimensions.getScreenHeight());
 	}
 
 	
 	@Override
-	public void update() {
-		LoadTexture.load(getEntityManager());
+	protected void processEntities(ImmutableBag<Entity> entities) {
+		List<Entity> renderQueue = new ArrayList<Entity>();
 
-		List<Component> renderQueue = new ArrayList<Component>();
-		renderQueue.addAll(getEntityManager().getComponents(Visual.class));
+		for(Entity entity:entities){
+			renderQueue.add(entity);
+		}
 		
-		//renderQueue.sort(comparator);
+		renderQueue.sort(comparator);
 		
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		
-		for (Component visComponent : renderQueue) {
-			Visual vis = (Visual) visComponent;
-			if (vis.getRegion() == null) {
-				continue;
-			}
-
+		for (Entity entity : renderQueue) {
 			
-			CellPlacement cellPlacement = (CellPlacement) getEntityManager().getComponent(CellPlacement.class, vis.getEntityId());
-			if(cellPlacement==null){
-				Draw draw = (Draw) getEntityManager().getComponent(Draw.class,  vis.getEntityId());
-				LOGGER.log(Level.SEVERE, "trying to draw a "+ draw.getType() +"\n But it has not a placement");
-				continue;
-			}
+			
+			Position position = cmPosition.get(entity);
+			Visual visual = cmVisual.get(entity);
+			Movable movable = cmMovable.get(entity);
 			
 			Vector2D<Float> screenPosition;
 
-			float width = vis.getRegion().getRegionWidth();
-			float height = vis.getRegion().getRegionHeight();
-			
-			Movable movable = (Movable) getEntityManager().getComponent(Movable.class, vis.getEntityId());
+			float width = visual.getRegion().getRegionWidth();
+			float height = visual.getRegion().getRegionHeight();
 
-			Vector2D<Float> gridPosition = cellPlacement.centerPosition();
+			Vector2D<Float> gridPosition = position.centerPosition();
 			
 			if(movable!=null){
 				gridPosition = gridPosition.add(movable.getCellPosition().sub(new Vector2D<Float>(0.5f, 0.5f)));
@@ -113,12 +113,12 @@ public class RenderSystem extends BaseSystem {
 			screenPosition = screenPosition.add(repositeTheCenter);
 			
 			/** Transformations for the game */
-			Vector2D<Float> gameTransSum = new Vector2D<Float>(vis.getTransform().dx, vis.getTransform().dy);
+			Vector2D<Float> gameTransSum = new Vector2D<Float>(visual.getTransform().dx, visual.getTransform().dy);
 			screenPosition = screenPosition.add(gameTransSum);
 
 	
 			
-			Transform t = vis.getTransform();
+			Transform t = visual.getTransform();
 			
 
 			float originX = width * 0.5f;
@@ -128,7 +128,7 @@ public class RenderSystem extends BaseSystem {
 //					screenPosition.getX(), 
 //					screenPosition.getY());
 			
-			batch.draw(vis.getRegion(),
+			batch.draw(visual.getRegion(),
 					screenPosition.getX(), 
 					screenPosition.getY(),
 					   originX, originY,
@@ -147,10 +147,6 @@ public class RenderSystem extends BaseSystem {
 		return cam;
 	}
 	
-	public Visual getVisual(Entity entity){
-		Visual visual = (Visual)getEntityManager().getComponent(Visual.class, entity.getEntityId());
-		return visual;
-	}
 	
 	/**
 	 * Method that convert a cell placement from grid reference to screen position.
@@ -163,7 +159,7 @@ public class RenderSystem extends BaseSystem {
 	 *  - get the center of the cell
 	 *  - rebase to the screen origin (left, down) 
 	 *  - scale to the configured num pix / cell 
-	 * @param cellPlacement
+	 * @param Position
 	 * @return
 	 */
 	public Vector2D<Float>  gridPositionToScreenPosition(Vector2D<Float> gridRef ){		

@@ -194,7 +194,7 @@ public class GameScreen extends ScreenAdapter {
 		}
 	}
 
-	public void drawUI () {
+	public void drawUI (float delta) {
 		guiCam.update();
 		game.batch.setProjectionMatrix(guiCam.combined);
 		game.batch.begin();
@@ -203,7 +203,7 @@ public class GameScreen extends ScreenAdapter {
 			presentReady();
 			break;
 		case GAME_RUNNING:
-			presentRunning();
+			presentRunning(delta);
 			break;
 		case GAME_PAUSED:
 			presentPaused();
@@ -223,7 +223,7 @@ public class GameScreen extends ScreenAdapter {
 
 	}
 
-	private void presentRunning () {
+	private void presentRunning (float deltaTime) {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
@@ -241,7 +241,7 @@ public class GameScreen extends ScreenAdapter {
 		Assets.font.setScale(0.6f, 1);
 		Assets.font.draw(game.batch, scoreString, 320 - 196, 480 - 32);
 		
-		match.update();
+		match.update(deltaTime);
 	}
 
 	private void presentPaused () {
@@ -276,7 +276,7 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void render (float delta) {
 		update(delta);
-		drawUI();
+		drawUI(delta);
 	}
 
 	@Override
