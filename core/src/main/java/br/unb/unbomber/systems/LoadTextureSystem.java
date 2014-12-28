@@ -18,6 +18,15 @@ import com.artemis.EntitySystem;
 import com.artemis.annotations.Wire;
 import com.artemis.utils.ImmutableBag;
 
+/**
+ * Load the textures of components.
+ * 
+ * Process Entities that have a Draw but not Visual and 
+ * create the Visual for them.
+ * 
+ * @author grodrigues
+ *
+ */
 @Wire
 public class LoadTextureSystem extends EntitySystem {
 
@@ -30,7 +39,8 @@ public class LoadTextureSystem extends EntitySystem {
 	private final static Logger LOGGER = Logger.getLogger(GameMatch.class.getName());
 	
 	public LoadTextureSystem(String visualTheme) {
-		super(Aspect.getAspectForAll(Draw.class, Position.class));
+		super(Aspect.getAspectForAll(Draw.class, Position.class)
+				.exclude(Visual.class));
 		
 		this.visualTheme = visualTheme;
 	}
@@ -41,18 +51,12 @@ public class LoadTextureSystem extends EntitySystem {
 			load(entity, visualTheme);
 		}
 	}
-	
 
-
-	public void load(Entity entity, String visualTheme){
-			Draw drawable = cmDraw.get(entity);
-			Visual visual = cmVisual.get(entity);
-			
-			if(visual == null){
-				LOGGER.log(Level.INFO, "loading draw for " + drawable.getType());
-				Visual vis = createVisual(drawable.getType());
-				entity.edit().add(vis);
-			}
+	public void load(Entity entity, String visualTheme) {
+		Draw drawable = cmDraw.get(entity);
+		LOGGER.log(Level.INFO, "loading draw for " + drawable.getType());
+		Visual vis = createVisual(drawable.getType());
+		entity.edit().add(vis);
 	}
 
 	private static Visual createVisual(String type) {
