@@ -1,5 +1,5 @@
 {
-name: "Stage Teste",
+name: "Stage Teste : Explosion 2",
 mapRepresentation: 
 "
 ####################
@@ -20,7 +20,7 @@ entities: [
 	{
 		components: [
 			{
-				class: br.unb.unbomber.component.CellPlacement,
+				class: br.unb.unbomber.component.Position,
 				cellX: 2,
 				cellY: 2
 			},{
@@ -39,7 +39,7 @@ entities: [
 	{
 		components: [
 			{
-				class: br.unb.unbomber.component.CellPlacement,
+				class: br.unb.unbomber.component.Position,
 				cellX: 2,
 				cellY: 3
 			},{
@@ -51,7 +51,7 @@ entities: [
 	{
 		components: [
 			{
-				class: br.unb.unbomber.component.CellPlacement,
+				class: br.unb.unbomber.component.Position,
 				cellX: 2,
 				cellY: 4
 			},{
