@@ -46,7 +46,7 @@ public class PlayerControlSystem extends EntitySystem {
 				case ACTION:
 					em.dispatch(
 							new ActionCommandEvent(
-									(ActionType) actionControl.getCommand().command, entity ));
+									(ActionType) actionControl.getCommand().command, entity.getUuid() ));
 					
 					break;
 				case MOVEMENT:
