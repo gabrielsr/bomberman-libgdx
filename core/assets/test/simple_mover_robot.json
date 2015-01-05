@@ -1,0 +1,97 @@
+{
+name: "Stage Teste",
+mapRepresentation: 
+"####################
+##  @@@@@@@@@@@@@@## 
+## #@#@#@#@#@#@#@###
+##  @@@@@@@@@@@@@@## 
+##@# #@# #@# #@# ###
+##  @@@@@@@@@@@@@@## 
+## #@# #@# # # # ###
+##  @@@@@@@@@@@@@@## 
+## #@#@#@#@#@#@#@###
+##  @@@@@@@@@@@@@@## 
+##@# #@# #@# #@# ###
+##  @@@@@@@@@@@@@@## 
+####################",
+entities: [
+	{
+		components: [
+			{
+				class: br.unb.unbomber.component.Position,
+				cellX: 2,
+				cellY: 5
+			},{
+				class: br.unb.unbomber.component.Draw,
+				type: character
+			},{
+				class: br.unb.unbomber.component.BombDropper,
+				explosionRange:5,
+				permittedSimultaneousBombs:10
+			},{
+				class: br.unb.unbomber.component.Movable,
+				speed:0.0625
+			},{
+				class: br.unb.unbomber.component.ExplosionBarrier,
+				type: PASS_THROUGH
+			},{
+				class: br.unb.unbomber.component.LifeType,
+				type:CHAR
+			},{
+				class: br.unb.unbomber.component.Health,
+				canTakeDamaged: true,
+			},{
+				class: br.unb.unbomber.robot.AI,
+				robot: {
+					class: br.unb.unbomber.robot.SimpleMoverRobot
+				}
+			},{
+				class: br.unb.unbomber.component.Control,
+				actions:[
+					{
+						class: br.unb.unbomber.component.ControlPair,
+						key:21,
+						command:COMMAND_LEFT
+					},	{
+						class: br.unb.unbomber.component.ControlPair,
+						key:22,
+						command:COMMAND_RIGHT
+					},
+					{
+						class: br.unb.unbomber.component.ControlPair,
+						key:19,
+						command:COMMAND_UP
+					},	{
+						class: br.unb.unbomber.component.ControlPair,
+						key:20,
+						command:COMMAND_DOWN
+					},{
+						class: br.unb.unbomber.component.ControlPair,
+						key:62,
+						command:COMMAND_DROP
+					},{
+						class: br.unb.unbomber.component.ControlPair,
+						key:66,
+						command:COMMAND_REMOTE
+					},{
+						class: br.unb.unbomber.component.ControlPair,
+						key:66,
+						command:COMMAND_REMOTE2
+					}
+				]
+			},{
+				class: br.unb.unbomber.component.AvailableTries,
+				lifeTries:0
+			},{
+				class: br.unb.unbomber.component.PowerUp,
+				types: [
+					BOXINGGLOVEACQUIRED
+				]
+			}
+		]
+	}
+],
+events: [
+]
+
+}

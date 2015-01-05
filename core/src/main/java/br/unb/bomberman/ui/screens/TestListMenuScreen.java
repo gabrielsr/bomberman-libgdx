@@ -49,6 +49,7 @@ public class TestListMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         MenuButtonFactory factory = new MenuButtonFactory();
         stage.addActor(factory.makeMenuButton(game, "Explosion", new GameScreen(game, game.TEST_STAGE_EXPLOSION)));
+        stage.addActor(factory.makeMenuButton(game, "Simple Robot", new GameScreen(game, game.TEST_SIMPLE_ROBOT)));
         stage.addActor(factory.makeMenuButton(game, "Renderization", new GameScreen(game, game.TEST_RENDERIZATION)));
         stage.addActor(factory.makeMenuButton(game, "Blocks Renderization", new GameScreen(game, game.TEST_STAGE_LOAD)));
         stage.addActor(factory.makeMenuButton(game, "Draw", new DrawScreen(game)));
