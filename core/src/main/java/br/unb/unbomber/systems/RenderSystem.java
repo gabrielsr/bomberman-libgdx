@@ -123,7 +123,6 @@ public class RenderSystem extends EntitySystem {
 //			batch.draw(vis.getRegion(),
 //					screenPosition.getX(), 
 //					screenPosition.getY());
-			
 			batch.draw(visual.getRegion(),
 					screenPosition.getX(), 
 					screenPosition.getY(),

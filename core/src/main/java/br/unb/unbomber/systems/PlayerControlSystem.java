@@ -52,7 +52,7 @@ public class PlayerControlSystem extends EntitySystem {
 				case MOVEMENT:
 					em.dispatch(
 							new MovementCommandEvent(
-									(Direction) actionControl.getCommand().command, entity ));
+									(Direction) actionControl.getCommand().command, entity.getUuid() ));
 					break;
 				}
 			}

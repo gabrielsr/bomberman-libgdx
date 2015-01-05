@@ -99,7 +99,7 @@ public class HUDSystem extends VoidEntitySystem {
 	
 	private void createGameOverEvent() {
 		// Create a game over event
-		GameOverEvent gameOverEvent = new GameOverEvent(this.HUD);
+		GameOverEvent gameOverEvent = new GameOverEvent(this.HUD.getUuid());
 		em.dispatch(gameOverEvent);
 	}
 }
