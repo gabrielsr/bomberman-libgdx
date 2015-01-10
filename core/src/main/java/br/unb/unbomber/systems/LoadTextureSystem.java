@@ -72,6 +72,11 @@ public class LoadTextureSystem extends EntitySystem {
 			trans.scalex = 1.6f;
 			trans.scaley = 1.6f;
 			trans.dy=  12;
+		}else if("zombie".equals(type)){
+			vis = new Visual(Assets.walkingZombieFront); 
+			trans.scalex = 1.6f;
+			trans.scaley = 1.6f;
+			trans.dy=  12;
 		}else if("bomb".equals(type)){
 			vis = new Visual(Assets.bomb);
 			trans.scalex = 0.8f;
