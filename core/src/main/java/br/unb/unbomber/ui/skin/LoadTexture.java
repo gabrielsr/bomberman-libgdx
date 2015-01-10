@@ -25,10 +25,10 @@ public class LoadTexture {
 
 	public void load(Entity entity, String visualTheme){
 			Draw drawable = cmDraw.get(entity);
-			Visual visual = cmVisual.get(entity);
+			Visual visual = cmVisual.getSafe(entity);
 			
 			if(visual == null){
-				LOGGER.log(Level.INFO, "loading draw for " + drawable.getType());
+				LOGGER.log(Level.FINER, "loading draw for " + drawable.getType());
 				Visual vis = createVisual(drawable.getType());
 				entity.edit().add(vis);
 			}

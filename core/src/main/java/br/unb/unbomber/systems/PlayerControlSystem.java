@@ -38,7 +38,10 @@ public class PlayerControlSystem extends EntitySystem {
 	
 	public void checkControls(Entity entity){
 
-		Control control = cmControl.get(entity);
+		Control control = cmControl.getSafe(entity);
+		if(control == null){
+			return;
+		}
 		
 		for(ControlPair actionControl: control.getActions()){
 			if(Gdx.input.isKeyPressed(actionControl.getKey())){
