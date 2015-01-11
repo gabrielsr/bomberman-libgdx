@@ -22,7 +22,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 
 @Wire
-public class CalcPositionToRenderSystem extends EntitySystem {
+public class ScreenPositionSystem extends EntitySystem {
 
 	
 	ComponentMapper<Draw> cmDraw;
@@ -41,7 +41,7 @@ public class CalcPositionToRenderSystem extends EntitySystem {
 
 	private ScreenDimensions screenDimensions = new ScreenDimensions();
 
-	public CalcPositionToRenderSystem() {
+	public ScreenPositionSystem() {
 		super(Aspect.getAspectForAll(Visual.class));
 	}
 

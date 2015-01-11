@@ -82,7 +82,7 @@ entities: [
 				class: br.unb.unbomber.component.AvailableTries,
 				lifeTries:0
 			},{
-				class: br.unb.unbomber.component.PowerUp,
+				class: br.unb.unbomber.component.PowerUpInventory,
 				types: [
 					BOXINGGLOVEACQUIRED, KICKACQUIRED
 				]
@@ -156,7 +156,7 @@ entities: [
 				class: br.unb.unbomber.component.AvailableTries,
 				lifeTries:0
 			},{
-				class: br.unb.unbomber.component.PowerUp,
+				class: br.unb.unbomber.component.PowerUpInventory,
 				types: [
 					BOXINGGLOVEACQUIRED, KICKACQUIRED
 				]
@@ -172,10 +172,6 @@ entities: [
 			},{
 				class: br.unb.unbomber.component.Draw,
 				type: zombie
-			},{
-				class: br.unb.unbomber.component.BombDropper,
-				explosionRange:5,
-				permittedSimultaneousBombs:10
 			},{
 				class: br.unb.unbomber.component.Movable,
 				speed:0.03125
@@ -196,11 +192,6 @@ entities: [
 			},{
 				class: br.unb.unbomber.component.AvailableTries,
 				lifeTries:0
-			},{
-				class: br.unb.unbomber.component.PowerUp,
-				types: [
-					BOXINGGLOVEACQUIRED, KICKACQUIRED
-				]
 			}
 		]
 	}

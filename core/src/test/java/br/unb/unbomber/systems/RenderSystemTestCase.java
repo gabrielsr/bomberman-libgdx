@@ -17,7 +17,7 @@ public class RenderSystemTestCase {
 	/** Gerenciador das entidades. */
 	EntityManager entityManager;
 
-	RenderSystem renderSystem;
+	ScreenPositionSystem screenPositionSystem;
 	
 	ScreenDimensions screenDimensions;
 	
@@ -26,10 +26,10 @@ public class RenderSystemTestCase {
 	@Before
 	public void setUp() throws Exception {
 
-		renderSystem = new RenderSystem(null);
+		screenPositionSystem = new ScreenPositionSystem();
 		
 		world = new World();
-		world.setSystem(renderSystem);
+		world.setSystem(screenPositionSystem);
 		
 		world.setManager(new EventManager());
 		
@@ -42,7 +42,7 @@ public class RenderSystemTestCase {
 	@Test
 	public void testGridPositionToScreenPosition() {
 		
-		Vector2D<Float> screenPosition = renderSystem.gridPositionToScreenPosition(new Vector2D<Float>(0.0f, 0.0f));
+		Vector2D<Float> screenPosition = screenPositionSystem.gridPositionToScreenPosition(new Vector2D<Float>(0.0f, 0.0f));
 		
 		assertEquals("x position", 0, screenPosition.getX().intValue());
 	

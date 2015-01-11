@@ -42,6 +42,8 @@ public class LoadTexture {
 			vis = new Visual(Assets.backgroundHBlock); 
 		}else if("softBlock".equals(type)){
 			vis = new Visual(Assets.backgroundSBlock); 
+		}else if("powerup".equals(type)){
+			vis = new Visual(Assets.backgroundSBlock); 
 		}else if("character".equals(type)){
 			vis = new Visual(Assets.walkingFront); 
 			trans.scalex = 1.6f;
@@ -53,6 +55,10 @@ public class LoadTexture {
 			trans.scaley = 0.8f;
 		}else if("explosion".equals(type)){
 			vis = new Visual(Assets.explosionCenter); 
+		}else if("powerup".equals(type)){
+			vis = new Visual(Assets.coinAnim); 
+		}else if("desease".equals(type)){
+			vis = new Visual(Assets.squirrelFly); 
 		}else{
 			vis = new Visual(Assets.backgroundGround);
 		}

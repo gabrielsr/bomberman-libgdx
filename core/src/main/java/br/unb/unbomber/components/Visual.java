@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Visual extends Component {
 	
 	private TextureRegionSource source;
-
+ 
 	private Transform transform;
 
 	float x;

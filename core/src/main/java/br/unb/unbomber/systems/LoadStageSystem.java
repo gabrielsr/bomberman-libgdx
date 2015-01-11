@@ -4,6 +4,7 @@ import net.mostlyoriginal.api.event.common.Event;
 import net.mostlyoriginal.api.event.common.EventManager;
 import br.unb.unbomber.component.ExplosionBarrier.ExplosionBarrierType;
 import br.unb.unbomber.component.MovementBarrier.MovementBarrierType;
+import br.unb.unbomber.component.PowerUpFont;
 import br.unb.unbomber.match.EntitySpec;
 import br.unb.unbomber.match.StageSpec;
 import br.unb.unbomber.misc.EntityBuilder2;
@@ -63,7 +64,9 @@ public class LoadStageSystem extends VoidEntitySystem {
 		EntityBuilder2.create(world)
 				.withMovementBarrier(MovementBarrierType.BLOCKER)
 				.withExplosionBarrier(Type).withPosition(x, y)
-				.withDraw(drawType).build();
+				.withDraw(drawType)
+				.with(new PowerUpFont())
+				.build();
 	}
 
 	
